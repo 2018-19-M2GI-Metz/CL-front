@@ -1,0 +1,7 @@
+{
+  "appId": "cl.front.mim",
+  "appName": "CL-front",
+  "bundledWebRuntime": false,
+  "webDir": "dist",
+  "windowsAndroidStudioPath": "C:\\Program Files\\Android\\android-studio\\bin\\studio64.exe"
+}
