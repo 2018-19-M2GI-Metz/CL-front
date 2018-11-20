@@ -4,9 +4,11 @@
   "scripts": {
     "ng": "ng",
     "start": "ng serve -o",
+    "start:mock": "ng serve -c mock -o",
     "build": "ng build",
+    "build:mock": "ng build -c mock",
     "test": "ng test",
-    "lint": "ng lint",
+    "lint": "ng lint --fix",
     "e2e": "ng e2e",
     "electron": "ng build --base-href ./ && electron ."
   },
