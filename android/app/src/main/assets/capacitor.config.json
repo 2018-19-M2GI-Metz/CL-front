@@ -1,0 +1,7 @@
+{
+  "appId": "cl.front.mim",
+  "appName": "CL-front",
+  "bundledWebRuntime": false,
+  "webDir": "dist",
+  "windowsAndroidStudioPath": "$ANDROID_STUDIO"
+}
