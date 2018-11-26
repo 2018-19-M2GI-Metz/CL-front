@@ -3,5 +3,5 @@
   "appName": "CL-front",
   "bundledWebRuntime": false,
   "webDir": "dist",
-  "windowsAndroidStudioPath": "$ANDROID_STUDIO"
+  "windowsAndroidStudioPath": "C:\\Program Files\\Android\\android-studio\\bin\\studio64.exe"
 }

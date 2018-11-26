@@ -17,7 +17,8 @@
 			"eg2.tslint",
 			"msjsdiag.debugger-for-chrome",
 			"eamodio.gitlens",
-			"michelemelluso.code-beautifier"
+			"michelemelluso.code-beautifier",
+			"trabpukcip.vscode-npm-scripts"
 		]
 	}
 }
