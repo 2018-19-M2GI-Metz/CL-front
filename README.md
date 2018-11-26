@@ -27,11 +27,7 @@ git clone https://github.com/2018-19-M2GI-Metz/CL-front.git
 ## Instalation des dépendances
 
 ~~~~
-npm install 
-~~~~
-ou 
-~~~~
-npm i 
+npm run install-project
 ~~~~
 
 Si une erreur apparaît par rapport a node-gyp, executer :
