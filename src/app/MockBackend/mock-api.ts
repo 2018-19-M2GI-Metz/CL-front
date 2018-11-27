@@ -1,18 +1,23 @@
 import { Position } from '../Model/position';
 import { Path } from '../Model/path';
 
-const position1: Position = { id: 1, lon: 1.123, lat: 3.321 };
-const position2: Position = { id: 2, lon: 32.123, lat: 40.321 };
-const position3: Position = { id: 3, lon: 48.123, lat: 64.321 };
-const path1: Path = { start: position1, end: position2 };
-const path2: Path = { start: position2, end: position3 };
-const path3: Path = { start: position3, end: position1 };
+const paris: Position = { id: 1, lon: 48.856783, lat: 2.348773 };
+const metz: Position = { id: 2, lon: 49.119457, lat: 6.175982 };
+const charleville: Position = { id: 3, lon: 49.762460, lat: 4.722300 };
+const path1: Path = { start: paris, end: metz };
+const path2: Path = { start: metz, end: charleville };
+const path3: Path = { start: charleville, end: paris };
 
 export const ApiRest: RestApi[] = [
     {
         url: "/api/nearestpoint",
         method: "GET",
-        objectToReturn: position1
+        objectToReturn: paris
+    },
+    {
+        url: "/api/positions",
+        method: "GET",
+        objectToReturn: [paris, metz, charleville]
     },
     {
         url: "/api/path",

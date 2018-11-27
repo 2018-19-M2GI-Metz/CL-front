@@ -6,6 +6,7 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { mockBackEndInterceptorFactory } from './MockBackend/mock-backend-interceptor';
 import { AppComponent } from './app.component';
+import { HttpService } from 'services/http-service.service';
 
 @NgModule({
   imports: [
@@ -19,7 +20,8 @@ import { AppComponent } from './app.component';
       provide: HTTP_INTERCEPTORS,
       useFactory: mockBackEndInterceptorFactory,
       multi: true
-    }
+    },
+    HttpService
   ],
   bootstrap: [AppComponent],
   declarations: [AppComponent]
