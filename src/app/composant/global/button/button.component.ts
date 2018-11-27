@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Input } from '@angular/core';
 
 @Component({
   selector: 'cl-button',
@@ -6,6 +6,9 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./button.component.scss']
 })
 export class ButtonComponent implements OnInit {
+  @Input() disabled: boolean;
+  @Input() style: 'flat' | 'icon' | 'circle' = 'flat';
+  @Input() color = "primary";
 
   constructor() { }
 
