@@ -1,5 +1,6 @@
 import { Component, OnInit, ViewChild, ElementRef, HostListener } from '@angular/core';
 import * as mappaMundi from 'mappa-mundi';
+import { Position } from 'model/position';
 
 @Component({
   selector: 'cl-map',
@@ -10,10 +11,15 @@ export class MapComponent implements OnInit {
   @ViewChild("map") canvas: ElementRef;
   private map;
   private ctx;
+  private positions: Position[];
 
   ngOnInit() {
     this.initMap();
-    this.drawPlace();
+    this.drawMap();
+  }
+
+  initPositions() {
+    this.positions.push(new Position());
   }
 
   initMap() {
@@ -24,7 +30,7 @@ export class MapComponent implements OnInit {
     const options = {
       lat: 0,
       lng: 0,
-      zoom: 4,
+      zoom: 3,
       style: "http://{s}.tile.osm.org/{z}/{x}/{y}.png"
     };
 
@@ -32,15 +38,21 @@ export class MapComponent implements OnInit {
     this.map.overlay(this.canvas.nativeElement);
   }
 
-  drawPlace() {
-    // const coor = this.map.latLngToPixel(11.396396, 5.076543);
-    // console.log(coor);
+  drawMap() {
+    this.map.onChange(() => {
+      this.clearMap();
+      const coor = this.map.latLngToPixel(49.120243, 6.175639);
 
-    this.ctx.beginPath();
-    this.ctx.lineWidth = "6";
-    this.ctx.strokeStyle = "red";
-    this.ctx.arc(100, 75, 50, 0, 2 * Math.PI);
-    this.ctx.stroke();
+      this.ctx.beginPath();
+      this.ctx.lineWidth = "6";
+      this.ctx.strokeStyle = "red";
+      this.ctx.arc(coor.x, coor.y, 20, 0, 2 * Math.PI);
+      this.ctx.stroke();
+    });
+  }
+
+  clearMap() {
+    this.ctx.clearRect(0, 0, window.innerWidth, window.innerHeight);
   }
 
   @HostListener('window:resize', ['$event'])
