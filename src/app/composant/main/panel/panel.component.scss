@@ -1,0 +1,18 @@
+:host {
+    display: block;
+    background-color: white;
+}
+
+::ng-deep.mat-tab-label,
+::ng-deep.mat-tab-label-active {
+    min-width: 45% !important;
+    padding: 3px !important;
+    margin: 3px !important;
+}
+
+@media (max-width: 640px) {
+    ::ng-deep.mat-tab-label,
+    ::ng-deep.mat-tab-label-active {
+        min-width: 30% !important;
+    }
+}
