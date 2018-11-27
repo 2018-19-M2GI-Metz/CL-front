@@ -13,6 +13,7 @@ export class MapComponent implements OnInit {
 
   ngOnInit() {
     this.initMap();
+    this.drawPlace();
   }
 
   initMap() {
@@ -29,6 +30,17 @@ export class MapComponent implements OnInit {
 
     this.map = mappa.tileMap(options);
     this.map.overlay(this.canvas.nativeElement);
+  }
+
+  drawPlace() {
+    // const coor = this.map.latLngToPixel(11.396396, 5.076543);
+    // console.log(coor);
+
+    this.ctx.beginPath();
+    this.ctx.lineWidth = "6";
+    this.ctx.strokeStyle = "red";
+    this.ctx.arc(100, 75, 50, 0, 2 * Math.PI);
+    this.ctx.stroke();
   }
 
   @HostListener('window:resize', ['$event'])
