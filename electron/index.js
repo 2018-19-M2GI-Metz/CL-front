@@ -26,7 +26,7 @@ const menuTemplateDev = [
   },
 ];
 
-async function createWindow () {
+async function createWindow() {
   // Define our main window size
   mainWindow = new BrowserWindow({
     height: 920,
@@ -34,18 +34,18 @@ async function createWindow () {
     show: false,
   });
 
-  if (isDevMode) {
-    // Set our above template to the Menu Object if we are in development mode, dont want users having the devtools.
-    Menu.setApplicationMenu(Menu.buildFromTemplate(menuTemplateDev));
-    // If we are developers we might as well open the devtools by default.
-    mainWindow.webContents.openDevTools();
-  }
+  /*   if (isDevMode) {
+      // Set our above template to the Menu Object if we are in development mode, dont want users having the devtools.
+      Menu.setApplicationMenu(Menu.buildFromTemplate(menuTemplateDev));
+      // If we are developers we might as well open the devtools by default.
+      mainWindow.webContents.openDevTools();
+    } */
 
-  if(useSplashScreen) {
+  if (useSplashScreen) {
     splashScreen = new CapacitorSplashScreen(mainWindow);
     splashScreen.init();
   } else {
-    mainWindow.loadURL(await injectCapacitor(`file://${__dirname}/app/index.html`), {baseURLForDataURL: `file://${__dirname}/app/`});
+    mainWindow.loadURL(await injectCapacitor(`file://${__dirname}/app/index.html`), { baseURLForDataURL: `file://${__dirname}/app/` });
     mainWindow.webContents.on('dom-ready', () => {
       mainWindow.show();
     });
