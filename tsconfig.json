@@ -5,6 +5,9 @@
     "paths": {
       "model/*": [
         "src/app/Model/*"
+      ],
+      "services/*": [
+        "src/app/services/*"
       ]
     },
     "outDir": "./dist/out-tsc",

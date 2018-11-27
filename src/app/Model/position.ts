@@ -1,5 +1,5 @@
 export class Position {
-  id: Number;
-  lat: Number;
-  lon: Number;
+  id: number;
+  lat: number;
+  lon: number;
 }
