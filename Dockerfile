@@ -1,4 +1,4 @@
-FROM node:11.1 as builder
+FROM danielpayet974/angular-cli:latest as builder
 WORKDIR /usr/src/tmp
 COPY ["./*.json", "./"]
 COPY src src
