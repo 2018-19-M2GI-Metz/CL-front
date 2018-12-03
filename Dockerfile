@@ -2,7 +2,7 @@ FROM danielpayet974/angular-cli:latest as builder
 WORKDIR /usr/src/tmp
 COPY ["./*.json", "./"]
 COPY src src
-RUN npm i --loglevel verbose --prod
+RUN npm i --loglevel verbose
 RUN npm run build:prod
 RUN mv dist/ ../ && rm -rf tmp
 
