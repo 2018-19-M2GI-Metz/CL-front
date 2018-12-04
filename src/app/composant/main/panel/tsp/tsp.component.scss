@@ -1,0 +1,17 @@
+:host {
+    display: block;
+    padding: 1rem;
+}
+
+form {
+    display: flex;
+    flex-direction: column;
+    >* {
+        margin: auto;
+    }
+    #action-button {
+        display: flex;
+        flex-direction: row;
+        margin: 1rem auto;
+    }
+}
