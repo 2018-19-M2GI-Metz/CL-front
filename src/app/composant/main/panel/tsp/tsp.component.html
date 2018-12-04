@@ -1,3 +1,15 @@
-<p>
-  tsp works!
-</p>
+<form (ngSubmit)="onSubmit()" [formGroup]="panelForm">
+
+  <cl-input formControlName="villeDepart" placeholder="Ville de départ"></cl-input>
+  <cl-input *ngFor="let city of villesSupp" [formControlName]="city" placeholder="Ville à visiter"></cl-input>
+  <div id="action-button">
+    <cl-button (click)="addCity()" [style]="'icon'">
+      <mat-icon>add_circle</mat-icon>
+    </cl-button>
+    <cl-button *ngIf="villesSupp.length > 1" (click)="removeCitySupp($event)" [style]="'icon'" [color]="'warn'">
+      <mat-icon>remove_circle_outline</mat-icon>
+    </cl-button>
+  </div>
+
+  <cl-button type="submit" [disabled]="!panelForm.valid">Calculer</cl-button>
+</form>

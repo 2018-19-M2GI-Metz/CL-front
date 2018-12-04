@@ -1,4 +1,4 @@
-<form (ngSubmit)="onSubmit()" [formGroup]="gpsForm">
+<form (ngSubmit)="onSubmit()" [formGroup]="panelForm">
 
   <cl-input formControlName="villeDepart" placeholder="Ville de départ"></cl-input>
   <cl-input *ngFor="let city of villesSupp" [formControlName]="city" placeholder="Ville intermédiaire"></cl-input>
@@ -12,5 +12,5 @@
     </cl-button>
   </div>
 
-  <cl-button type="submit" [disabled]="!gpsForm.valid">Rechercher</cl-button>
+  <cl-button type="submit" [disabled]="!panelForm.valid">Rechercher</cl-button>
 </form>
