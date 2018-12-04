@@ -12,7 +12,6 @@ export class HttpService {
   public getNearestPosition(): Promise<Position> {
     return new Promise((res, rej) => {
       this.http.get('/api/nearestpoint').subscribe((position: Position) => {
-        console.log(position);
         res(position);
       }, err => {
         console.log(err);

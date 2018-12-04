@@ -4,9 +4,10 @@ import { NgModule } from '@angular/core';
 import { AppRoutingModule } from './app-routing.module';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
-import { mockBackEndInterceptorFactory } from './MockBackend/mock-backend-interceptor';
+import { mockBackEndInterceptorFactory } from './mockBackend/mock-backend-interceptor';
 import { AppComponent } from './app.component';
 import { HttpService } from 'services/http-service.service';
+import { UserLocationService } from 'services/user-location.service';
 
 @NgModule({
   imports: [
@@ -21,7 +22,8 @@ import { HttpService } from 'services/http-service.service';
       useFactory: mockBackEndInterceptorFactory,
       multi: true
     },
-    HttpService
+    HttpService,
+    UserLocationService
   ],
   bootstrap: [AppComponent],
   declarations: [AppComponent]
