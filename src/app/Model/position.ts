@@ -1,5 +1,3 @@
 export class Position {
-  id: number;
-  lat: number;
-  lon: number;
+  constructor(public id: number, public lat: number, public lon: number) { }
 }

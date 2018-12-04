@@ -2,6 +2,7 @@ import { Component, OnInit, ViewChild, ElementRef, HostListener, AfterViewInit }
 import * as mappaMundi from 'mappa-mundi';
 import { HttpService } from 'services/http-service.service';
 import { Position } from 'model/position';
+import { UserLocationService } from 'services/user-location.service';
 
 @Component({
   selector: 'cl-map',
@@ -14,51 +15,56 @@ export class MapComponent implements OnInit, AfterViewInit {
   private ctx;
   private positions: Position[] = [];
 
-  constructor(private httpService: HttpService) { }
+  constructor(private httpService: HttpService, private userLocationService: UserLocationService) { }
 
   ngOnInit() {
 
   }
 
-  ngAfterViewInit() {
-    this.initMap();
+  async ngAfterViewInit() {
     this.initPositions();
+    await this.initMap();
     this.drawMap();
   }
 
-  async initPositions() {
+  private async initPositions() {
     this.positions.push(...await this.httpService.getAllPositions());
   }
 
-  initMap() {
-    const key = 'pk.eyJ1IjoiZGFuaWVscGF5ZXQiLCJhIjoiY2pvem1leGF0Mm1hOTN3cGhmbHM0b3p2ayJ9.s0Gdr8eabQi56tHONKv1Sg';
-    const mappa = new mappaMundi('Mapbox', key);
-    this.ctx = this.canvas.nativeElement.getContext("2d");
-    this.canvas.nativeElement.width = window.innerWidth;
-    this.canvas.nativeElement.height = window.innerHeight;
-    const options = {
-      lat: 0,
-      lng: 0,
-      zoom: 3,
-      // style: "http://{s}.tile.osm.org/{z}/{x}/{y}.png"
-    };
-
-    this.map = mappa.tileMap(options);
-    this.map.overlay(this.canvas.nativeElement);
-  }
-
-  drawMap() {
-    this.map.onChange(() => {
-      this.clearMap();
-      this.drawPositions();
+  private initMap(): Promise<{}> {
+    return new Promise(async (res) => {
+      const key = 'pk.eyJ1IjoiZGFuaWVscGF5ZXQiLCJhIjoiY2pvem1leGF0Mm1hOTN3cGhmbHM0b3p2ayJ9.s0Gdr8eabQi56tHONKv1Sg';
+      const mappa = new mappaMundi('Mapbox', key);
+      this.ctx = this.canvas.nativeElement.getContext("2d");
+      this.canvas.nativeElement.width = window.innerWidth;
+      this.canvas.nativeElement.height = window.innerHeight;
+      const userPosition: Position = await this.userLocationService.getUserLocation();
+      const options = {
+        lat: userPosition ? userPosition.lat : 0,
+        lng: userPosition ? userPosition.lon : 0,
+        zoom: userPosition ? 10 : 3,
+        // style: "http://{s}.tile.osm.org/{z}/{x}/{y}.png"
+      };
+      this.map = mappa.tileMap(options);
+      this.map.overlay(this.canvas.nativeElement);
+      res();
     });
   }
 
-  clearMap() {
+  private drawMap() {
+    if (this.map) {
+      this.map.onChange(() => {
+        this.clearMap();
+        this.drawPositions();
+      });
+    }
+  }
+
+  private clearMap() {
     this.ctx.clearRect(0, 0, window.innerWidth, window.innerHeight);
   }
 
-  drawPositions() {
+  private drawPositions() {
     this.positions.forEach(position => {
       const positionPixels = this.map.latLngToPixel(position.lon, position.lat);
 
@@ -69,10 +75,4 @@ export class MapComponent implements OnInit, AfterViewInit {
       this.ctx.stroke();
     });
   }
-
-  // @HostListener('window:resize', ['$event'])
-  // onResize(event) {
-  //   this.canvas.nativeElement.width = window.innerWidth;
-  //   this.canvas.nativeElement.height = window.innerHeight;
-  // }
 }
