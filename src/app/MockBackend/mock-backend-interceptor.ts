@@ -4,14 +4,6 @@ import { of, Observable } from 'rxjs';
 import { environment } from '../../environments/environment';
 import { ApiRest, RestApi } from './mock-api';
 
-export function mockBackEndInterceptorFactory() {
-    if (environment.isServeurMock) {
-        return new MockBackendInterceptor();
-    } else {
-        return new EmptyBackendInterceptor();
-    }
-}
-
 @Injectable()
 class MockBackendInterceptor implements HttpInterceptor {
 
@@ -28,5 +20,13 @@ class MockBackendInterceptor implements HttpInterceptor {
 class EmptyBackendInterceptor implements HttpInterceptor {
     intercept(request: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
         return next.handle(request);
+    }
+}
+
+export function mockBackEndInterceptorFactory() {
+    if (environment.isServeurMock) {
+        return new MockBackendInterceptor();
+    } else {
+        return new EmptyBackendInterceptor();
     }
 }

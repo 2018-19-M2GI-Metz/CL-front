@@ -1,5 +1,5 @@
-import { Position } from '../Model/position';
-import { Path } from '../Model/path';
+import { Position } from 'model/position';
+import { Path } from 'model/path';
 
 const paris: Position = { id: 1, lon: 48.856783, lat: 2.348773 };
 const metz: Position = { id: 2, lon: 49.119457, lat: 6.175982 };

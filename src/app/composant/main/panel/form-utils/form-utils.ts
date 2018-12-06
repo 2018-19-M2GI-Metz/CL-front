@@ -9,13 +9,13 @@ export abstract class FormPanelUtils {
         this.inputValidators = [Validators.required, Validators.minLength(1)];
     }
 
-    protected addCity() {
+    public addCity() {
         const formControlName = `city-${this.villesSupp.length}`;
         this.villesSupp.push(formControlName);
         this.panelForm.addControl(formControlName, new FormControl(undefined, this.inputValidators));
     }
 
-    protected removeCitySupp(event) {
+    public removeCitySupp(event) {
         event.preventDefault();
         const cityControlName = this.villesSupp[this.villesSupp.length - 1];
         this.villesSupp = this.villesSupp.filter(v => v !== cityControlName);
