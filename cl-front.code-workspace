@@ -8,7 +8,8 @@
 		"editor.formatOnSave": true,
 		"editor.cursorBlinking": "smooth",
 		"gitlens.blame.dateFormat": "MMMM D YYYY, HH:mm",
-		"javascript.implicitProjectConfig.experimentalDecorators": true
+		"javascript.implicitProjectConfig.experimentalDecorators": true,
+		"npm-scripts.showStartNotification": false
 	},
 	"extensions": {
 		"recommendations": [
