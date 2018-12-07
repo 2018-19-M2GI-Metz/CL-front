@@ -19,6 +19,9 @@ class MockBackendInterceptor implements HttpInterceptor {
 @Injectable()
 class EmptyBackendInterceptor implements HttpInterceptor {
     intercept(request: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
+        request = request.clone({
+            url: "http://" + environment.urlServeur + request.url
+        });
         return next.handle(request);
     }
 }
