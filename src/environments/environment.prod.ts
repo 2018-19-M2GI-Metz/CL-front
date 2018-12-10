@@ -1,5 +1,5 @@
 export const environment = {
   production: true,
   isServeurMock: false,
-  urlServeur: "0.0.0.0"
+  urlServeur: "127.0.0.1"
 };
