@@ -1,8 +1,11 @@
-import { Injectable } from '@angular/core';
-import { HttpInterceptor, HttpRequest, HttpHandler, HttpEvent, HttpResponse } from '@angular/common/http';
-import { of, Observable } from 'rxjs';
+import { Injectable, Inject } from '@angular/core';
+import { HttpInterceptor, HttpRequest, HttpHandler, HttpEvent, HttpResponse, HttpErrorResponse } from '@angular/common/http';
+import { of, Observable, throwError } from 'rxjs';
 import { environment } from '../../environments/environment';
 import { ApiRest, RestApi } from './mock-api';
+import { ErreurService } from 'services/erreur-pop-up.service';
+import { catchError } from 'rxjs/operators';
+import { TouchSequence } from 'selenium-webdriver';
 
 @Injectable()
 class MockBackendInterceptor implements HttpInterceptor {
@@ -18,6 +21,9 @@ class MockBackendInterceptor implements HttpInterceptor {
 
 @Injectable()
 class EmptyBackendInterceptor implements HttpInterceptor {
+
+    constructor(private erreurService: ErreurService) { }
+
     intercept(request: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
         request = request.clone({
             url: "http://" + environment.urlServeur + request.url
@@ -26,10 +32,10 @@ class EmptyBackendInterceptor implements HttpInterceptor {
     }
 }
 
-export function mockBackEndInterceptorFactory() {
+export function mockBackEndInterceptorFactory(erreurService: ErreurService) {
     if (environment.isServeurMock) {
         return new MockBackendInterceptor();
     } else {
-        return new EmptyBackendInterceptor();
+        return new EmptyBackendInterceptor(erreurService);
     }
 }

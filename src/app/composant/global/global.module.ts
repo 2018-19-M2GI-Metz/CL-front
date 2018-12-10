@@ -6,23 +6,30 @@ import { FormsModule } from '@angular/forms';
 import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
 import { MatInputModule } from '@angular/material/input';
+import { MatDialogModule } from '@angular/material/dialog';
+import { ErreurPopUpComponent } from './erreur-pop-up/erreur-pop-up.component';
 
 @NgModule({
   declarations: [
     ButtonComponent,
-    InputComponent
+    InputComponent,
+    ErreurPopUpComponent
   ],
   imports: [
     CommonModule,
     FormsModule,
     MatButtonModule,
     MatIconModule,
-    MatInputModule
+    MatInputModule,
+    MatDialogModule
   ],
   exports: [
     ButtonComponent,
     InputComponent
   ],
-  schemas: [CUSTOM_ELEMENTS_SCHEMA]
+  schemas: [CUSTOM_ELEMENTS_SCHEMA],
+  entryComponents: [
+    ErreurPopUpComponent
+  ]
 })
 export class GlobalModule { }

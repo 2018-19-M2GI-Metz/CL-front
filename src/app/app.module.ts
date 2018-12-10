@@ -4,10 +4,11 @@ import { NgModule } from '@angular/core';
 import { AppRoutingModule } from './app-routing.module';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
-import { mockBackEndInterceptorFactory } from './mockBackend/mock-backend-interceptor';
+import { mockBackEndInterceptorFactory } from './mock-backend/mock-backend-interceptor';
 import { AppComponent } from './app.component';
-import { HttpService } from 'services/http-service.service';
-import { UserLocationService } from 'services/user-location.service';
+import { MatDialogModule } from '@angular/material/dialog';
+import { GlobalModule } from './composant/global/global.module';
+import { ErreurService } from 'services/erreur-pop-up.service';
 
 @NgModule({
   imports: [
@@ -15,15 +16,16 @@ import { UserLocationService } from 'services/user-location.service';
     AppRoutingModule,
     BrowserAnimationsModule,
     HttpClientModule,
+    MatDialogModule,
+    GlobalModule
   ],
   providers: [
     {
       provide: HTTP_INTERCEPTORS,
       useFactory: mockBackEndInterceptorFactory,
+      deps: [ErreurService],
       multi: true
-    },
-    HttpService,
-    UserLocationService
+    }
   ],
   bootstrap: [AppComponent],
   declarations: [AppComponent]
