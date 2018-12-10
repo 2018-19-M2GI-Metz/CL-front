@@ -42,7 +42,7 @@ export class MapComponent implements OnInit, AfterViewInit {
       this.userPointer.src = PointerIcons;
       this.userPointer.onload = () => {
         res();
-      }
+      };
     });
   }
 
@@ -79,9 +79,11 @@ export class MapComponent implements OnInit, AfterViewInit {
     this.ctx.clearRect(0, 0, window.innerWidth, window.innerHeight);
   }
 
-  private drawUserLocation(){
-    const positionPixels = this.map.latLngToPixel(this.userPosition.lat, this.userPosition.lon);
-    this.ctx.drawImage(this.userPointer, positionPixels.x, positionPixels.y);
+  private drawUserLocation() {
+    if (this.userPosition) {
+      const positionPixels = this.map.latLngToPixel(this.userPosition.lat, this.userPosition.lon);
+      this.ctx.drawImage(this.userPointer, positionPixels.x, positionPixels.y);
+    }
   }
 
   private drawPositions() {

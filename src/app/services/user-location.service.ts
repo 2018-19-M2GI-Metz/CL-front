@@ -11,9 +11,13 @@ export class UserLocationService {
       if (navigator.geolocation) {
         navigator.geolocation.getCurrentPosition(position => {
           res(new Position(undefined, position.coords.latitude, position.coords.longitude));
-        });
+        },
+          err => {
+            console.log("La geolocation n'est pas disponible : " + err.message);
+            res(undefined);
+          });
       } else {
-        console.info("La geolocation n'est pas disponible");
+        console.info("La geolocation n'est pas disponible sur ce navigateur");
         res(undefined);
       }
     });
