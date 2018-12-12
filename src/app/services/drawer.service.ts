@@ -1,6 +1,12 @@
 import { Injectable } from '@angular/core';
 import { PointerIcons } from '../composant/main/map/icones/icones';
 
+const COLORS = {
+  blue1: "rgba(63, 81, 188, 0.9)",
+  blue2: "rgba(63, 81, 188, 0.7)",
+  blue3: "rgba(63, 81, 188, 0.5)",
+  white: "rgba(255, 255, 255, 0.6)",
+};
 @Injectable({
   providedIn: 'root'
 })
@@ -30,8 +36,23 @@ export class DrawerService {
 
   location(position: any) {
     this.ctx.beginPath();
-    this.ctx.lineWidth = "6";
-    this.ctx.strokeStyle = "red";
+    this.ctx.lineWidth = "1";
+    this.ctx.strokeStyle = COLORS.blue1;
+    this.ctx.arc(position.x, position.y, 4, 0, 2 * Math.PI);
+    this.ctx.stroke();
+    this.ctx.beginPath();
+    this.ctx.lineWidth = "2";
+    this.ctx.strokeStyle = COLORS.white;
+    this.ctx.arc(position.x, position.y, 6, 0, 2 * Math.PI);
+    this.ctx.stroke();
+    this.ctx.beginPath();
+    this.ctx.lineWidth = "2";
+    this.ctx.strokeStyle = COLORS.blue2;
+    this.ctx.arc(position.x, position.y, 8, 0, 2 * Math.PI);
+    this.ctx.stroke();
+    this.ctx.beginPath();
+    this.ctx.lineWidth = "1";
+    this.ctx.strokeStyle = COLORS.blue3;
     this.ctx.arc(position.x, position.y, 20, 0, 2 * Math.PI);
     this.ctx.stroke();
   }
