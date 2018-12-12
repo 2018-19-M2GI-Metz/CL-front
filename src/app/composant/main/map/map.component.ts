@@ -4,6 +4,7 @@ import { HttpService } from 'services/http-service.service';
 import { Position } from 'model/position';
 import { UserLocationService } from 'services/user-location.service';
 import { DrawerService } from 'services/drawer.service';
+import { Path } from 'model/path';
 
 @Component({
   selector: 'cl-map',
@@ -15,6 +16,7 @@ export class MapComponent implements OnInit, AfterViewInit {
   private map;
   private positions: Position[] = [];
   private userPosition: Position;
+  private paths: Path[] = [];
 
   constructor(private httpService: HttpService, private userLocationService: UserLocationService, private drawerService: DrawerService) { }
 
@@ -65,6 +67,17 @@ export class MapComponent implements OnInit, AfterViewInit {
         this.clearMap();
         this.drawUserLocation();
         this.drawPositions();
+        this.drawPaths();
+      });
+    }
+  }
+
+  private drawPaths() {
+    if (this.paths) {
+      this.paths.forEach(path => {
+        const startPixels = this.map.latLngToPixel(path.start.lat, path.start.lon);
+        const endPixels = this.map.latLngToPixel(path.end.lat, path.end.lon);
+        this.drawerService.path(startPixels, endPixels);
       });
     }
   }

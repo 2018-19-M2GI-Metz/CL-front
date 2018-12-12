@@ -56,4 +56,12 @@ export class DrawerService {
     this.ctx.arc(position.x, position.y, 20, 0, 2 * Math.PI);
     this.ctx.stroke();
   }
+
+  path(start: any, end: any) {
+    this.ctx.beginPath();
+    this.ctx.strokeStyle = COLORS.blue1;
+    this.ctx.moveTo(start.x, start.y);
+    this.ctx.lineTo(end.x, end.y);
+    this.ctx.stroke();
+  }
 }
