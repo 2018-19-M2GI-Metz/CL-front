@@ -15,9 +15,9 @@ export class ErreurService {
     }
 
 
-    setErreur(erreur: string, info: any) {
+    setErreur(erreur: string, info: any = {}) {
         this.erreur = erreur;
-        this.info = info ? info : {};
+        this.info = info;
         return this;
     }
 
