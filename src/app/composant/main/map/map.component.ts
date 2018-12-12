@@ -3,7 +3,7 @@ import * as mappaMundi from 'mappa-mundi';
 import { HttpService } from 'services/http-service.service';
 import { Position } from 'model/position';
 import { UserLocationService } from 'services/user-location.service';
-import { PointerIcons } from './icones/icones';
+import { DrawerService } from 'services/drawer.service';
 
 @Component({
   selector: 'cl-map',
@@ -13,12 +13,10 @@ import { PointerIcons } from './icones/icones';
 export class MapComponent implements OnInit, AfterViewInit {
   @ViewChild("map") canvas: ElementRef;
   private map;
-  private ctx;
   private positions: Position[] = [];
   private userPosition: Position;
-  private userPointer;
 
-  constructor(private httpService: HttpService, private userLocationService: UserLocationService) { }
+  constructor(private httpService: HttpService, private userLocationService: UserLocationService, private drawerService: DrawerService) { }
 
   ngOnInit() {
 
@@ -38,11 +36,7 @@ export class MapComponent implements OnInit, AfterViewInit {
   private initUserLocation() {
     return new Promise(async (res) => {
       this.userPosition = await this.userLocationService.getUserLocation();
-      this.userPointer = new Image();
-      this.userPointer.src = PointerIcons;
-      this.userPointer.onload = () => {
-        res();
-      };
+      res();
     });
   }
 
@@ -50,7 +44,7 @@ export class MapComponent implements OnInit, AfterViewInit {
     return new Promise(async (res) => {
       const key = 'pk.eyJ1IjoiZGFuaWVscGF5ZXQiLCJhIjoiY2pvem1leGF0Mm1hOTN3cGhmbHM0b3p2ayJ9.s0Gdr8eabQi56tHONKv1Sg';
       const mappa = new mappaMundi('Mapbox', key);
-      this.ctx = this.canvas.nativeElement.getContext("2d");
+      this.drawerService.setContext(this.canvas.nativeElement.getContext("2d"));
       this.canvas.nativeElement.width = window.innerWidth;
       this.canvas.nativeElement.height = window.innerHeight;
       const options = {
@@ -76,24 +70,20 @@ export class MapComponent implements OnInit, AfterViewInit {
   }
 
   private clearMap() {
-    this.ctx.clearRect(0, 0, window.innerWidth, window.innerHeight);
+    this.drawerService.clear();
   }
 
   private drawUserLocation() {
     if (this.userPosition) {
       const positionPixels = this.map.latLngToPixel(this.userPosition.lat, this.userPosition.lon);
-      this.ctx.drawImage(this.userPointer, positionPixels.x, positionPixels.y);
+      this.drawerService.pointer(positionPixels);
     }
   }
 
   private drawPositions() {
     this.positions.forEach(position => {
       const positionPixels = this.map.latLngToPixel(position.lon, position.lat);
-      this.ctx.beginPath();
-      this.ctx.lineWidth = "6";
-      this.ctx.strokeStyle = "red";
-      this.ctx.arc(positionPixels.x, positionPixels.y, 20, 0, 2 * Math.PI);
-      this.ctx.stroke();
+      this.drawerService.location(positionPixels);
     });
   }
 }
