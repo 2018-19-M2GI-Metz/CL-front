@@ -7,9 +7,8 @@ RUN npm run build:prod
 RUN mv dist/ ../ && rm -rf tmp
 
 FROM nginx:alpine
-
-COPY ["cert_chained.crt", "private.key", "/etc/nginx/"]
+COPY cert/cert_chained.crt /etc/nginx/cert_chained.crt
+COPY cert/private.key /etc/nginx/private.key
 COPY nginx.conf /etc/nginx/nginx.conf
-
 WORKDIR /usr/share/nginx/html
 COPY --from=builder /usr/src/dist/* ./
