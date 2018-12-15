@@ -1,4 +1,4 @@
-import { Component, OnInit, Input, forwardRef } from '@angular/core';
+import { Component, Input, forwardRef, Output, EventEmitter } from '@angular/core';
 import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
 
 @Component({
@@ -13,10 +13,13 @@ import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
     }
   ]
 })
-export class InputComponent implements OnInit, ControlValueAccessor {
+export class InputComponent implements ControlValueAccessor {
   @Input() placeholder: string;
   @Input() disabled = false;
+  @Input() removeButton = false;
   @Input() _value: string;
+  @Input() formControlName: string;
+  @Output() onInputRemove: EventEmitter<string> = new EventEmitter();
   private propagateChange = (_: any) => { };
 
   get value(): string {
@@ -26,11 +29,6 @@ export class InputComponent implements OnInit, ControlValueAccessor {
   set value(val: string) {
     this._value = val;
     this.propagateChange(this._value);
-  }
-
-  constructor() { }
-
-  ngOnInit() {
   }
 
   writeValue(val: string) {
@@ -44,4 +42,7 @@ export class InputComponent implements OnInit, ControlValueAccessor {
 
   registerOnTouched() { }
 
+  removeInput() {
+    this.onInputRemove.emit(this.formControlName);
+  }
 }

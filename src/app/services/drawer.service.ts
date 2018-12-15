@@ -1,5 +1,6 @@
 import { Injectable } from '@angular/core';
-import { PointerIcons } from '../composant/main/map/icones/icones';
+import { UserPointerIcons, LocationPointerIcons } from '../composant/main/map/icones/icones';
+import { Path } from 'model/path';
 
 const COLORS = {
   blue1: "rgba(63, 81, 188, 0.9)",
@@ -11,13 +12,25 @@ const COLORS = {
   providedIn: 'root'
 })
 export class DrawerService {
-  private pointerImage: any;
+  private userPointerImage: HTMLImageElement;
+  private locationPointerImage: HTMLImageElement;
   private ctx;
 
   constructor() {
-    this.pointerImage = new Image();
-    this.pointerImage.src = PointerIcons;
-    this.pointerImage.onload = () => { };
+    this.initUserPointer();
+    this.initLocationPointer();
+  }
+
+  private initUserPointer() {
+    this.userPointerImage = new Image();
+    this.userPointerImage.src = UserPointerIcons;
+    this.userPointerImage.onload = () => { };
+  }
+
+  private initLocationPointer() {
+    this.locationPointerImage = new Image();
+    this.locationPointerImage.src = LocationPointerIcons;
+    this.locationPointerImage.onload = () => { };
   }
 
   setContext(context: any) {
@@ -28,10 +41,16 @@ export class DrawerService {
     this.ctx.clearRect(0, 0, window.innerWidth, window.innerHeight);
   }
 
+  pointerUser(position: any) {
+    const widthOffset = this.userPointerImage.width / 2 - 10;
+    const heightOffset = this.userPointerImage.height / 2;
+    this.ctx.drawImage(this.userPointerImage, position.x - widthOffset, position.y - heightOffset);
+  }
+
   pointer(position: any) {
-    const widthOffset = this.pointerImage.width / 2 - 10;
-    const heightOffset = this.pointerImage.height / 2;
-    this.ctx.drawImage(this.pointerImage, position.x - widthOffset, position.y - heightOffset);
+    const widthOffset = this.userPointerImage.width / 2 - 10;
+    const heightOffset = this.userPointerImage.height / 2;
+    this.ctx.drawImage(this.locationPointerImage, position.x - widthOffset, position.y - heightOffset);
   }
 
   location(position: any) {
