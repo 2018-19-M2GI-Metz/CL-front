@@ -3,7 +3,7 @@ import { HttpInterceptor, HttpRequest, HttpHandler, HttpEvent, HttpResponse, Htt
 import { of, Observable, throwError } from 'rxjs';
 import { environment } from '../../environments/environment';
 import { ApiRest, RestApi } from './mock-api';
-import { ErreurService } from 'services/erreur-pop-up.service';
+import { LogService } from 'services/log.service';
 import { catchError } from 'rxjs/operators';
 import { TouchSequence } from 'selenium-webdriver';
 
@@ -22,7 +22,7 @@ class MockBackendInterceptor implements HttpInterceptor {
 @Injectable()
 class EmptyBackendInterceptor implements HttpInterceptor {
 
-    constructor(private erreurService: ErreurService) { }
+    constructor(private logService: LogService) { }
 
     intercept(request: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
         request = request.clone({
@@ -32,10 +32,10 @@ class EmptyBackendInterceptor implements HttpInterceptor {
     }
 }
 
-export function mockBackEndInterceptorFactory(erreurService: ErreurService) {
+export function mockBackEndInterceptorFactory(logService: LogService) {
     if (environment.isServeurMock) {
         return new MockBackendInterceptor();
     } else {
-        return new EmptyBackendInterceptor(erreurService);
+        return new EmptyBackendInterceptor(logService);
     }
 }

@@ -1,10 +1,13 @@
 import { Injectable } from '@angular/core';
 import { Position } from 'model/position';
+import { LogService } from './log.service';
 
 @Injectable({
   providedIn: 'root'
 })
 export class UserLocationService {
+
+  constructor(private logService: LogService) { }
 
   public getUserLocation(): Promise<Position> {
     return new Promise((res) => {
@@ -13,11 +16,11 @@ export class UserLocationService {
           res(new Position(undefined, position.coords.latitude, position.coords.longitude));
         },
           err => {
-            console.log("La geolocation n'est pas disponible : " + err.message);
+            this.logService.set("La geolocation n'est pas disponible :", err.message).asWarn().and.log();
             res(undefined);
           });
       } else {
-        console.info("La geolocation n'est pas disponible sur ce navigateur");
+        this.logService.set("La geolocation n'est pas disponible sur ce navigateur").asWarn().and.log();
         res(undefined);
       }
     });

@@ -8,7 +8,7 @@ import { mockBackEndInterceptorFactory } from './mock-backend/mock-backend-inter
 import { AppComponent } from './app.component';
 import { MatDialogModule } from '@angular/material/dialog';
 import { GlobalModule } from './composant/global/global.module';
-import { ErreurService } from 'services/erreur-pop-up.service';
+import { LogService } from 'services/log.service';
 
 @NgModule({
   imports: [
@@ -23,7 +23,7 @@ import { ErreurService } from 'services/erreur-pop-up.service';
     {
       provide: HTTP_INTERCEPTORS,
       useFactory: mockBackEndInterceptorFactory,
-      deps: [ErreurService],
+      deps: [LogService],
       multi: true
     }
   ],

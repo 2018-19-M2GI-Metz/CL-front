@@ -1,30 +1,26 @@
-import { Component, OnInit, ViewChild, ElementRef, HostListener, AfterViewInit } from '@angular/core';
+import { Component, OnInit, ViewChild, ElementRef } from '@angular/core';
 import * as mappaMundi from 'mappa-mundi';
-import { HttpService } from 'services/http-service.service';
 import { Position } from 'model/position';
 import { UserLocationService } from 'services/user-location.service';
 import { DrawerService } from 'services/drawer.service';
-import { Path } from 'model/path';
+import { MapDataService } from 'services/map-data.service';
 
 @Component({
   selector: 'cl-map',
   templateUrl: './map.component.html',
   styleUrls: ['./map.component.scss']
 })
-export class MapComponent implements OnInit, AfterViewInit {
+export class MapComponent implements OnInit {
   @ViewChild("map") canvas: ElementRef;
   private map;
   private positions: Position[] = [];
-  private userPosition: Position;
-  private paths: Path[] = [];
 
-  constructor(private httpService: HttpService, private userLocationService: UserLocationService, private drawerService: DrawerService) { }
+  constructor(
+    private userLocationService: UserLocationService,
+    private drawerService: DrawerService,
+    private mapData: MapDataService) { }
 
-  ngOnInit() {
-
-  }
-
-  async ngAfterViewInit() {
+  async ngOnInit() {
     this.initPositions();
     await this.initUserLocation();
     await this.initMap();
@@ -32,12 +28,12 @@ export class MapComponent implements OnInit, AfterViewInit {
   }
 
   private async initPositions() {
-    this.positions.push(...await this.httpService.getAllPositions());
+    // this.positions.push(...await this.httpService.getAllPositions());
   }
 
   private initUserLocation() {
     return new Promise(async (res) => {
-      this.userPosition = await this.userLocationService.getUserLocation();
+      this.mapData.userPosition = await this.userLocationService.getUserLocation();
       res();
     });
   }
@@ -50,9 +46,9 @@ export class MapComponent implements OnInit, AfterViewInit {
       this.canvas.nativeElement.width = window.innerWidth;
       this.canvas.nativeElement.height = window.innerHeight;
       const options = {
-        lat: this.userPosition ? this.userPosition.lat : 0,
-        lng: this.userPosition ? this.userPosition.lon : 0,
-        zoom: this.userPosition ? 10 : 3,
+        lat: this.mapData.userPosition ? this.mapData.userPosition.lat : 0,
+        lng: this.mapData.userPosition ? this.mapData.userPosition.lon : 0,
+        zoom: this.mapData.userPosition ? 10 : 3,
         // style: "http://{s}.tile.osm.org/{z}/{x}/{y}.png"
       };
       this.map = mappa.tileMap(options);
@@ -62,21 +58,24 @@ export class MapComponent implements OnInit, AfterViewInit {
   }
 
   private drawMap() {
+    const updateDraw = () => {
+      this.clearMap();
+      this.drawUserLocation();
+      this.drawLocation();
+      this.drawPositions();
+      this.drawPaths();
+    };
     if (this.map) {
-      this.map.onChange(() => {
-        this.clearMap();
-        this.drawUserLocation();
-        this.drawPositions();
-        this.drawPaths();
-      });
+      this.map.onChange(updateDraw);
+      this.mapData.onChange().subscribe(updateDraw);
     }
   }
 
   private drawPaths() {
-    if (this.paths) {
-      this.paths.forEach(path => {
-        const startPixels = this.map.latLngToPixel(path.start.lat, path.start.lon);
-        const endPixels = this.map.latLngToPixel(path.end.lat, path.end.lon);
+    if (this.mapData.paths) {
+      this.mapData.paths.forEach(path => {
+        const startPixels = this.map.latLngToPixel(path.start.lon, path.start.lat);
+        const endPixels = this.map.latLngToPixel(path.end.lon, path.end.lat);
         this.drawerService.path(startPixels, endPixels);
       });
     }
@@ -87,9 +86,18 @@ export class MapComponent implements OnInit, AfterViewInit {
   }
 
   private drawUserLocation() {
-    if (this.userPosition) {
-      const positionPixels = this.map.latLngToPixel(this.userPosition.lat, this.userPosition.lon);
-      this.drawerService.pointer(positionPixels);
+    if (this.mapData.userPosition) {
+      const positionPixels = this.map.latLngToPixel(this.mapData.userPosition.lat, this.mapData.userPosition.lon);
+      this.drawerService.pointerUser(positionPixels);
+    }
+  }
+
+  private drawLocation() {
+    if (this.mapData.pointersLocation) {
+      this.mapData.pointersLocation.forEach(position => {
+        const positionPixels = this.map.latLngToPixel(position.lon, position.lat);
+        this.drawerService.pointer(positionPixels);
+      });
     }
   }
 

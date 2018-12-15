@@ -5,7 +5,7 @@ import { Component, OnInit } from '@angular/core';
   templateUrl: './panel.component.html',
   styleUrls: ['./panel.component.scss']
 })
-export class PanelComponent implements OnInit {
+export class PanelComponent {
   public navLinks: { label: string, path: string }[] = [
     {
       label: "GPS",
@@ -16,10 +16,4 @@ export class PanelComponent implements OnInit {
       path: "tsp",
     }
   ];
-
-  constructor() { }
-
-  ngOnInit() {
-  }
-
 }
