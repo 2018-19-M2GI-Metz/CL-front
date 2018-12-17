@@ -1,5 +1,8 @@
-import { Component, Input, forwardRef, Output, EventEmitter } from '@angular/core';
+import { Component, Input, forwardRef, Output, EventEmitter, OnInit } from '@angular/core';
 import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
+import { Observable, Subject } from 'rxjs';
+import { City } from 'model/city';
+import { startWith, map } from 'rxjs/operators';
 
 @Component({
   selector: 'cl-input',
@@ -13,13 +16,16 @@ import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
     }
   ]
 })
-export class InputComponent implements ControlValueAccessor {
+export class InputComponent implements OnInit, ControlValueAccessor {
   @Input() placeholder: string;
   @Input() disabled = false;
   @Input() removeButton = false;
   @Input() _value: string;
   @Input() formControlName: string;
+  @Input() cities: City[];
   @Output() onInputRemove: EventEmitter<string> = new EventEmitter();
+  public filtered_cities: Observable<City[]>;
+  private valueChanges: Subject<string> = new Subject();
   private propagateChange = (_: any) => { };
 
   get value(): string {
@@ -28,21 +34,39 @@ export class InputComponent implements ControlValueAccessor {
 
   set value(val: string) {
     this._value = val;
-    this.propagateChange(this._value);
+    this.notifyChange();
   }
 
-  writeValue(val: string) {
+  public writeValue(val: string) {
     this._value = val;
-    this.propagateChange(this._value);
+    this.notifyChange();
   }
 
-  registerOnChange(fn: (val: string) => void) {
+  public registerOnChange(fn: (val: string) => void) {
     this.propagateChange = fn;
   }
 
-  registerOnTouched() { }
+  public registerOnTouched() { }
 
-  removeInput() {
+  public removeInput() {
     this.onInputRemove.emit(this.formControlName);
+  }
+
+  private notifyChange() {
+    this.valueChanges.next(this._value);
+    this.propagateChange(this._value);
+  }
+
+  public ngOnInit() {
+    this.filtered_cities = this.valueChanges.pipe(
+      startWith(''),
+      map(value => this.filterCities(value.toLowerCase()))
+    );
+  }
+
+  private filterCities(value: string): City[] {
+    if (this.cities) {
+      return this.cities.filter(city => city.name.toLowerCase().indexOf(value) === 0);
+    }
   }
 }

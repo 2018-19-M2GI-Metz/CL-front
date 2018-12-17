@@ -8,6 +8,8 @@ import { MatIconModule } from '@angular/material/icon';
 import { MatInputModule } from '@angular/material/input';
 import { MatDialogModule } from '@angular/material/dialog';
 import { ErreurPopUpComponent } from './erreur-pop-up/erreur-pop-up.component';
+import { MatAutocompleteModule } from '@angular/material/autocomplete';
+import { PipesModule } from 'src/app/pipes/pipes.module';
 
 @NgModule({
   declarations: [
@@ -21,7 +23,9 @@ import { ErreurPopUpComponent } from './erreur-pop-up/erreur-pop-up.component';
     MatButtonModule,
     MatIconModule,
     MatInputModule,
-    MatDialogModule
+    MatDialogModule,
+    MatAutocompleteModule,
+    PipesModule
   ],
   exports: [
     ButtonComponent,

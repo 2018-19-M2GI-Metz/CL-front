@@ -1,10 +1,10 @@
-<button *ngIf="style === 'flat'" mat-stroked-button [color]="color" [disabled]="disabled">
+<button [type]="type" *ngIf="style === 'flat'" mat-stroked-button [color]="color" [disabled]="disabled">
     <ng-container *ngTemplateOutlet="content"></ng-container>
 </button>
-<button *ngIf="style === 'icon'" mat-icon-button [color]="color" [disabled]="disabled">
+<button [type]="type" *ngIf="style === 'icon'" mat-icon-button [color]="color" [disabled]="disabled">
     <ng-container *ngTemplateOutlet="content"></ng-container>
 </button>
-<button *ngIf="style === 'circle'" mat-fab [color]="color" [disabled]="disabled">
+<button [type]="type" *ngIf="style === 'circle'" mat-fab [color]="color" [disabled]="disabled">
     <ng-container *ngTemplateOutlet="content"></ng-container>
 </button>
 

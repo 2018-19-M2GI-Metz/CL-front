@@ -4,7 +4,8 @@ import { Position } from 'model/position';
 import { LogService } from './log.service';
 import { Path } from 'model/path';
 import { Observable, zip, of, throwError } from 'rxjs';
-import { catchError, take } from 'rxjs/operators';
+import { catchError, take, tap, map } from 'rxjs/operators';
+import { City } from 'model/city';
 
 @Injectable({
   providedIn: 'root'
@@ -72,17 +73,21 @@ export class HttpService {
   private createRequestGPS(positions: Position[]): Observable<Path[]>[] {
     return positions.map((_, i) => {
       if (i < positions.length - 1) {
-        const params: HttpParams = new HttpParams();
-        params.set('idStart', positions[i].id.toString());
-        params.set('idEnd', positions[i + 1].id.toString());
+        const params: HttpParams = new HttpParams()
+          .set('idStart', positions[i].id.toString())
+          .set('idEnd', positions[i + 1].id.toString());
         return this.http.get<Path[]>('/path', { params: params });
       }
     }).filter(o => o);
   }
 
   private createRequestTSP(positions: Position[]): Observable<Path[]> {
-    const params: HttpParams = new HttpParams();
-    positions.map(position => params.append('id', position.id.toString()));
+    let params: HttpParams = new HttpParams();
+    positions.map(position => params = params.append('id', position.id.toString()));
     return this.http.get<Path[]>('/tsp', { params: params });
+  }
+
+  getCites(): Promise<City[]> {
+    return this.http.get<City[]>('/cities').pipe(map((cites: City[]) => cites.sort((c1: City, c2: City) => c1.name.localeCompare(c2.name)))).toPromise();
   }
 }
