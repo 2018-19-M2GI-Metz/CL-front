@@ -1,9 +1,8 @@
-<form (ngSubmit)="onSubmit()" [formGroup]="panelForm">
-
-  <cl-input formControlName="villeDepart" placeholder="Ville de départ"></cl-input>
-  <cl-input *ngFor="let city of villesSupp" [formControlName]="city" placeholder="Ville intermédiaire" [removeButton]="true"
-    (onInputRemove)="removeCitySupp($event)"></cl-input>
-  <cl-input formControlName="villeArrivee" placeholder="Ville d'arrivée"></cl-input>
+<form (ngSubmit)="onSubmit()" [formGroup]="panelForm" autocomplete="off">
+  <cl-input formControlName="villeDepart" placeholder="Ville de départ" [cities]="cities"></cl-input>
+  <cl-input *ngFor="let city of villesSupp" [formControlName]="city" [cities]="cities" placeholder="Ville intermédiaire"
+    [removeButton]="true" (onInputRemove)="removeCitySupp($event)"></cl-input>
+  <cl-input formControlName="villeArrivee" placeholder="Ville d'arrivée" [cities]="cities"></cl-input>
   <div id="action-button">
     <cl-button (click)="addCity()" [style]="'icon'">
       <mat-icon>add_circle</mat-icon>

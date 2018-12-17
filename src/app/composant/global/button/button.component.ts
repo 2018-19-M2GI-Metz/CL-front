@@ -9,6 +9,7 @@ export class ButtonComponent implements OnInit {
   @Input() disabled: boolean;
   @Input() style: 'flat' | 'icon' | 'circle' = 'flat';
   @Input() color = "primary";
+  @Input() type = 'button';
 
   constructor() { }
 

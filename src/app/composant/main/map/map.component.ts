@@ -46,9 +46,9 @@ export class MapComponent implements OnInit {
       this.canvas.nativeElement.width = window.innerWidth;
       this.canvas.nativeElement.height = window.innerHeight;
       const options = {
-        lat: this.mapData.userPosition ? this.mapData.userPosition.lat : 0,
-        lng: this.mapData.userPosition ? this.mapData.userPosition.lon : 0,
-        zoom: this.mapData.userPosition ? 10 : 3,
+        lat: this.mapData.userPosition ? this.mapData.userPosition.lat : 46.483440,
+        lng: this.mapData.userPosition ? this.mapData.userPosition.lon : 2.525914,
+        zoom: this.mapData.userPosition ? 10 : 6,
         // style: "http://{s}.tile.osm.org/{z}/{x}/{y}.png"
       };
       this.map = mappa.tileMap(options);

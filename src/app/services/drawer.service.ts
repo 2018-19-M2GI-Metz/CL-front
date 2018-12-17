@@ -1,6 +1,5 @@
 import { Injectable } from '@angular/core';
 import { UserPointerIcons, LocationPointerIcons } from '../composant/main/map/icones/icones';
-import { Path } from 'model/path';
 
 const COLORS = {
   blue1: "rgba(63, 81, 188, 0.9)",
