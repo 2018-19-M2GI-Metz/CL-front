@@ -24,7 +24,7 @@ export const ApiRest: RestApi[] = [
     {
         url: "/nearestpoint",
         method: "GET",
-        objectToReturn: () => paris
+        objectToReturn: () => metz
     },
     {
         url: "/positions",

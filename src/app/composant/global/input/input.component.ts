@@ -3,6 +3,9 @@ import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
 import { Observable, Subject } from 'rxjs';
 import { City } from 'model/city';
 import { startWith, map } from 'rxjs/operators';
+import { HttpService } from 'services/http-service.service';
+import { MapDataService } from 'services/map-data.service';
+import { Position } from 'model/position';
 
 @Component({
   selector: 'cl-input',
@@ -37,6 +40,8 @@ export class InputComponent implements OnInit, ControlValueAccessor {
     this.notifyChange();
   }
 
+  constructor(private http: HttpService, private mapData: MapDataService) { }
+
   public writeValue(val: string) {
     this._value = val;
     this.notifyChange();
@@ -68,5 +73,10 @@ export class InputComponent implements OnInit, ControlValueAccessor {
     if (this.cities) {
       return this.cities.filter(city => city.name.toLowerCase().indexOf(value) === 0);
     }
+  }
+
+  public async getUserLocation() {
+    const nearestPoint: Position = await this.http.getNearestPosition(this.mapData.userPosition);
+    this.value = this.cities.find((city: City) => city.position.lat === nearestPoint.lat && city.position.lon === nearestPoint.lon).name;
   }
 }
