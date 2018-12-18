@@ -1,2 +1,12 @@
+<mat-toolbar *ngIf="isSmallScreen()" color="primary">
+    <span>M2GI Map</span>
+    <span id="fill"></span>
+    <button *ngIf="!isMenuOpen" mat-icon-button (click)="openPanel()">
+        <mat-icon>directions</mat-icon>
+    </button>
+    <button *ngIf="isMenuOpen" mat-icon-button (click)="closePanel()">
+        <mat-icon>map</mat-icon>
+    </button>
+</mat-toolbar>
 <cl-map></cl-map>
-<cl-panel></cl-panel>
+<cl-panel [ngStyle]="getMenuProperties()"></cl-panel>
