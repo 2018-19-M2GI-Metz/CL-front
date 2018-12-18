@@ -14,9 +14,10 @@ export class HttpService {
 
   constructor(private http: HttpClient, private logService: LogService) { }
 
-  public getNearestPosition(): Promise<Position> {
+  public getNearestPosition(positionUser: Position): Promise<Position> {
     return new Promise((res, rej) => {
-      this.http.get('/nearestpoint').subscribe((position: Position) => {
+      const params = new HttpParams().set('lat', positionUser.lat.toString()).set('lon', positionUser.lon.toString());
+      this.http.get('/nearestpoint', {params: params}).subscribe((position: Position) => {
         res(position);
       }, err => {
         this.logService.set("Impossible de récuperer le point le plus proche de votre position", err).asError().showPopUp().and.log();
