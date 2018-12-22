@@ -1,6 +1,0 @@
-{
-  "appId": "cl.front.mim",
-  "appName": "CL-front",
-  "bundledWebRuntime": false,
-  "webDir": "dist"
-}

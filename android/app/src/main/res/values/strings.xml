@@ -1,8 +1,0 @@
-<?xml version='1.0' encoding='utf-8'?>
-<resources>
-    <string name="app_name">CL-front</string>
-    <string name="title_activity_main">CL-front</string>
-    <string name="package_name">cl.front.mim</string>
-    <string name="fileprovider_authority">cl.front.mim.fileprovider</string>
-    <string name="custom_url_scheme">cl.front.mim</string>
-</resources>
