@@ -2,9 +2,10 @@ FROM danielpayet974/angular-cli:latest as builder
 WORKDIR /usr/src/tmp
 COPY ["./*.json", "./"]
 COPY src src
+COPY cordova
 RUN npm i --loglevel verbose
 RUN npm run build:prod
-RUN mv dist/ ../ && rm -rf tmp
+RUN mv cordova/www ../ && rm -rf tmp
 
 FROM nginx:alpine
 COPY cert/cert_chained.crt /etc/nginx/cert_chained.crt
