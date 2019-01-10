@@ -1,0 +1,12 @@
+{
+  "background_color": "#FFF",
+  "display": "standalone",
+  "orientation": "any",
+  "start_url": "index.html",
+  "name": "Cl-Front",
+  "short_name": "Cl-Front",
+  "version": "cl.front.mim",
+  "description": "La meilleure app EVER",
+  "author": "M2Gi Team",
+  "icons": []
+}
