@@ -19,3 +19,20 @@ cl-panel {
     height: 90%;
     position: absolute;
 }
+
+@media (max-width: 640px) {
+    mat-toolbar {
+        width: 100%;
+    }
+    #fill {
+        flex: 1 1 auto;
+    }
+    cl-panel {
+        z-index: 1000;
+        top: 56px;
+        right: 0;
+        height: 100%;
+        position: absolute;
+        transition: width 1s;
+    }
+}
