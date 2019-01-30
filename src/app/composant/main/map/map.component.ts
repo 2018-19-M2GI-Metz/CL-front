@@ -1,6 +1,6 @@
 import { Component, OnInit, ViewChild, ElementRef } from '@angular/core';
 import * as mappaMundi from 'mappa-mundi';
-import { Position } from 'model/position';
+import { Place } from 'model/place';
 import { UserLocationService } from 'services/user-location.service';
 import { DrawerService } from 'services/drawer.service';
 import { MapDataService } from 'services/map-data.service';
@@ -13,7 +13,7 @@ import { MapDataService } from 'services/map-data.service';
 export class MapComponent implements OnInit {
   @ViewChild("map") canvas: ElementRef;
   private map;
-  private positions: Position[] = [];
+  private positions: Place[] = [];
 
   constructor(
     private userLocationService: UserLocationService,
@@ -22,20 +22,12 @@ export class MapComponent implements OnInit {
 
   async ngOnInit() {
     this.initPositions();
-    await this.initUserLocation();
     await this.initMap();
     this.drawMap();
   }
 
   private async initPositions() {
     // this.positions.push(...await this.httpService.getAllPositions());
-  }
-
-  private initUserLocation() {
-    return new Promise(async (res) => {
-      this.mapData.userPosition = await this.userLocationService.getUserLocation();
-      res();
-    });
   }
 
   private initMap(): Promise<{}> {
@@ -45,10 +37,11 @@ export class MapComponent implements OnInit {
       this.drawerService.setContext(this.canvas.nativeElement.getContext("2d"));
       this.canvas.nativeElement.width = window.innerWidth;
       this.canvas.nativeElement.height = window.innerHeight;
+      const userPosition = await this.userLocationService.getUserLocation();
       const options = {
-        lat: this.mapData.userPosition ? this.mapData.userPosition.lat : 46.483440,
-        lng: this.mapData.userPosition ? this.mapData.userPosition.lon : 2.525914,
-        zoom: this.mapData.userPosition ? 10 : 6,
+        lat: userPosition ? userPosition.lat : 46.483440,
+        lng: userPosition ? userPosition.lon : 2.525914,
+        zoom: userPosition ? 10 : 6,
         // style: "http://{s}.tile.osm.org/{z}/{x}/{y}.png"
       };
       this.map = mappa.tileMap(options);
@@ -85,9 +78,10 @@ export class MapComponent implements OnInit {
     this.drawerService.clear();
   }
 
-  private drawUserLocation() {
-    if (this.mapData.userPosition) {
-      const positionPixels = this.map.latLngToPixel(this.mapData.userPosition.lat, this.mapData.userPosition.lon);
+  private async drawUserLocation() {
+    const userPosition = await this.userLocationService.getUserLocation();
+    if (userPosition) {
+      const positionPixels = this.map.latLngToPixel(userPosition.lat, userPosition.lon);
       this.drawerService.pointerUser(positionPixels);
     }
   }

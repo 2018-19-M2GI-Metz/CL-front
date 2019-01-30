@@ -1,27 +1,15 @@
 import { Injectable } from '@angular/core';
 import { Path } from 'model/path';
-import { Position } from 'model/position';
+import { Place } from 'model/place';
 import { Subject } from 'rxjs';
-import { HttpService } from './http-service.service';
-import { City } from 'model/city';
 
 @Injectable({
   providedIn: 'root'
 })
 export class MapDataService {
-  public userPosition: Position;
   public paths: Path[] = [];
-  public pointersLocation: Position[] = [];
-  public cities: City[];
+  public pointersLocation: Place[] = [];
   private change: Subject<any> = new Subject();
-
-  constructor(private http: HttpService) {
-    this.initCities();
-  }
-
-  private async initCities() {
-    this.cities = await this.http.getCites();
-  }
 
   addPath(...paths: Path[]) {
     this.paths.push(...paths);
@@ -41,7 +29,7 @@ export class MapDataService {
     this.notify();
   }
 
-  addPointersLocations(...positions: Position[]) {
+  addPointersLocations(...positions: Place[]) {
     this.pointersLocation.push(...positions);
     this.notify();
   }

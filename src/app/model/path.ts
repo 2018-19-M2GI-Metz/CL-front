@@ -1,6 +1,6 @@
-import { Position } from './position';
+import { Place } from './place';
 
 export class Path {
-  start: Position;
-  end: Position;
+  start: Place;
+  end: Place;
 }
