@@ -1,9 +1,9 @@
 import { AbstractControl, ValidatorFn, FormGroup } from "@angular/forms";
-import { City } from "model/city";
+import { Place } from "model/place";
 
-export function knowCity(cites: City[]): ValidatorFn {
+export function knowCity(cites: Place[]): ValidatorFn {
     return (control: AbstractControl): { [key: string]: any } | null => {
-       return cites && !cites.some(city => city.name === control.value) ? { 'cityInexist': { value: control.value } } : null;
+        return cites && !cites.some(city => city.name === control.value) ? { 'cityInexist': { value: control.value } } : null;
     };
 }
 
