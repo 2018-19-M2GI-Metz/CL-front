@@ -27,13 +27,13 @@ git clone https://github.com/2018-19-M2GI-Metz/CL-front.git
 ## Instalation des dépendances
 
 ~~~~
-npm run install-project
+npm install
 ~~~~
 
 Si une erreur apparaît par rapport a node-gyp, executer :
 ~~~~
 # Windows: 
-npm install --global windows-build-tools
+npm install -g windows-build-tools
 
 #Linux:
 sudo apt install build-essential
@@ -48,7 +48,32 @@ Si tout vas bien vous devriez voir "Compiled successfully" et une page de votre 
 
 Ferme le terminale, on va passer par vscode pour lancer l'app par la suite.
 
-# Installer VS Code
+# Dev 
+## Lancer l'appli pour le dev 
+
+- Si le serveur est lancer : npm start +
+    configuration de l'url du serveur dans le fichier src/environment.ts
+- Sinon en mode mock : npm run start:mock
+
+-Lancer l'appli android : executer une des commandes au dessus + npm run prepare + npm run start:android
+
+-Lancer l'appli electron : executer une des commandes au dessus + npm run prepare + npm run start:electron
+
+Le client ce lance est ouvrir automatiquement une page dans le navigateur.
+
+## Compiler 
+
+
+- compiler (web) en debug : npm run build
+- compiler (web) en release sans serveur: npm run build:prod:mock + 
+(Va aussi mettre les fichiers de l'appli dans les projets android et electron)
+- compiler en release avec serveur: npm run build:prod + 
+(Va aussi mettre les fichiers de l'appli dans les projets android et electron)
+- npm build:apps : compile l'appli android et electron. Faut executer npm run build:prod(ou npm run build:prod:mock) avant pour copier les dépendances et les ressources. 
+
+Les fichiers web (index.html, *.js,...) se trouvent dans le dossier cordova/www.
+
+# Bonus : Installer VS Code et les outils qui facilitent la vie
 
 Lien pour télécharger : https://code.visualstudio.com/Download
 
