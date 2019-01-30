@@ -1,9 +1,8 @@
 import { Component, OnInit } from '@angular/core';
-import { FormGroup, FormControl } from '@angular/forms';
-import { FormPanelUtils } from '../form-utils/form-utils';
+import { FormControl, FormGroup } from '@angular/forms';
 import { HttpService } from 'services/http-service.service';
 import { MapDataService } from 'services/map-data.service';
-import { metz, charleville } from 'src/app/mock-backend/mock-api';
+import { FormPanelUtils } from '../form-utils/form-utils';
 
 @Component({
   selector: 'cl-tsp',

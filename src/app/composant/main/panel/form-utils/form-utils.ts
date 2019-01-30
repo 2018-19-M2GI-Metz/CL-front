@@ -1,8 +1,7 @@
 import { FormGroup, ValidatorFn, Validators, FormControl } from '@angular/forms';
-import { City } from 'model/city';
 import { MapDataService } from 'services/map-data.service';
 import { OnInit } from '@angular/core';
-import { Position } from 'model/position';
+import { Place } from 'model/place';
 import { Path } from 'model/path';
 import { HttpService } from 'services/http-service.service';
 import { knowCity, notAlreadyChoose } from './forms.validators';
@@ -11,12 +10,12 @@ export abstract class FormPanelUtils implements OnInit {
     public panelForm: FormGroup;
     public villesSupp: string[] = [];
     public inputValidators: ValidatorFn[];
-    public cities: City[];
+    public cities: Place[] = undefined;
 
-    constructor(protected http: HttpService, protected mapData: MapDataService) { }
+    constructor(protected http: HttpService, protected mapData: MapDataService) {
+    }
 
     ngOnInit() {
-        this.cities = this.mapData.cities;
         this.inputValidators = [Validators.required, Validators.minLength(1), knowCity(this.cities), notAlreadyChoose()];
     }
 
@@ -40,11 +39,14 @@ export abstract class FormPanelUtils implements OnInit {
         this.panelForm.removeControl(cityControlName);
     }
 
-    private getPositionFromForms(): Position[] {
-        return this.getFormValues().map((cityName: string) => this.mapData.cities.find((city: City) => city.name === cityName).position);
+    private getPositionFromForms(): Promise<Place[][]> {
+        return Promise.all(
+            this.getCitiesNameFromForm()
+                .map((cityName: string) => this.http.search(cityName))
+        );
     }
 
-    private getFormValues() {
+    private getCitiesNameFromForm() {
         const values = Object.values(this.panelForm.value);
         if (values.length > 2) {
             const arrivelCity = values[1];
@@ -54,9 +56,9 @@ export abstract class FormPanelUtils implements OnInit {
         return values;
     }
 
-    protected async onSubmit(fn: (positions: Position[]) => Promise<Path[]>) {
+    protected async onSubmit(fn: (positions: Place[]) => Promise<Path[]>) {
         this.mapData.resetPaths();
         this.mapData.resetPointersLocations();
-        this.mapData.addPath(...await fn.call(this.http, this.getPositionFromForms()));
+        this.mapData.addPath(...await fn.call(this.http, (await this.getPositionFromForms()).map(place => place[0])));
     }
 }
