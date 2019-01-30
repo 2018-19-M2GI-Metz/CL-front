@@ -18,6 +18,13 @@ cl-panel {
     width: 20%;
     height: 90%;
     position: absolute;
+    transition: width 1.5s;
+}
+
+@media (max-width: 900px) {
+    cl-panel {
+        width: 30%;
+    }
 }
 
 @media (max-width: 640px) {
