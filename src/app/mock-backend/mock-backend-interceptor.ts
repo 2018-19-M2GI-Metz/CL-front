@@ -1,11 +1,9 @@
-import { Injectable, Inject } from '@angular/core';
-import { HttpInterceptor, HttpRequest, HttpHandler, HttpEvent, HttpResponse, HttpErrorResponse } from '@angular/common/http';
-import { of, Observable, throwError } from 'rxjs';
-import { environment } from '../../environments/environment';
-import { ApiRest, RestApi } from './mock-api';
+import { HttpEvent, HttpHandler, HttpInterceptor, HttpRequest, HttpResponse } from '@angular/common/http';
+import { Injectable } from '@angular/core';
+import { Observable, of } from 'rxjs';
 import { LogService } from 'services/log.service';
-import { catchError } from 'rxjs/operators';
-import { TouchSequence } from 'selenium-webdriver';
+import { environment } from '../../environments/environment';
+import { IApiRest, ApiRest } from './api';
 
 @Injectable()
 class MockBackendInterceptor implements HttpInterceptor {
@@ -13,7 +11,7 @@ class MockBackendInterceptor implements HttpInterceptor {
     constructor(private logService: LogService) { }
 
     intercept(request: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
-        const api: RestApi = ApiRest.find(apiRest => request.url.endsWith(apiRest.url) && request.method === apiRest.method);
+        const api: IApiRest = ApiRest.find(apiRest => request.url.endsWith(apiRest.url) && request.method === apiRest.method);
         if (api) {
             return of(new HttpResponse({ status: 200, body: api.objectToReturn.call(undefined, request) }));
         } else {
