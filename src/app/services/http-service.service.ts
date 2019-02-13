@@ -45,8 +45,7 @@ export class HttpService {
             rej(undefined);
             return throwError({});
           }),
-          take(1),
-          tap(data => console.log(data))
+          take(1)
         )
         .subscribe((paths: Path[][]) => {
           res(paths.reduce((accu, x) => accu.concat(x), []));
