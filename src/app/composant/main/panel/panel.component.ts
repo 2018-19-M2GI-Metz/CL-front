@@ -6,14 +6,9 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./panel.component.scss']
 })
 export class PanelComponent {
-  public navLinks: { label: string, path: string }[] = [
-    {
-      label: "GPS",
-      path: "gps",
-    },
-    {
-      label: "TSP",
-      path: "tsp",
-    }
-  ];
+  public current = 0;
+
+  public setCurrentTab(index) {
+    this.current = index;
+  }
 }

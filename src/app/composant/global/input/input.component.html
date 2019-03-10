@@ -1,8 +1,8 @@
 <mat-form-field floatLabel="never">
-    <button type="button" mat-button matPrefix (click)="getUserLocation()" mat-icon-button>
+    <button type="button" matPrefix (click)="getUserLocation()" mat-icon-button>
         <mat-icon>my_location</mat-icon>
     </button>
-    <input matInput [placeholder]="placeholder" [(ngModel)]="value"  [matAutocomplete]="auto">
+    <input matInput [placeholder]="placeholder" [(ngModel)]="value" [matAutocomplete]="auto">
     <button mat-button *ngIf="value" matSuffix mat-icon-button aria-label="Clear" (click)="value=''">
         <mat-icon>close</mat-icon>
     </button>

@@ -1,16 +1,8 @@
-<!-- <nav mat-tab-nav-bar>
-  <a mat-tab-link *ngFor="let link of navLinks" [routerLink]="[{ outlets: { panel: [link.path] } }]" routerLinkActive #rla="routerLinkActive" [active]="rla.isActive">
-    {{link.label}}
-  </a>
-</nav>
-
-<router-outlet name="panel"></router-outlet> -->
-
-<mat-tab-group mat-align-tabs="center" [backgroundColor]="'primary'">
+<mat-tab-group mat-align-tabs="center" [backgroundColor]="'primary'" (selectedIndexChange)="setCurrentTab($event)">
   <mat-tab label="GPS">
-    <cl-gps></cl-gps>
+    <cl-gps [current]="current"></cl-gps>
   </mat-tab>
   <mat-tab label="TSP">
-    <cl-tsp></cl-tsp>
+    <cl-tsp [current]="current"></cl-tsp>
   </mat-tab>
 </mat-tab-group>
