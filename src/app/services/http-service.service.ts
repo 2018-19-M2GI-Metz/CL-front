@@ -3,7 +3,7 @@ import { Injectable } from '@angular/core';
 import { Path } from 'model/path';
 import { Place } from 'model/place';
 import { Observable, throwError, zip } from 'rxjs';
-import { catchError, take } from 'rxjs/operators';
+import { catchError, take, tap } from 'rxjs/operators';
 import { LogService } from './log.service';
 
 @Injectable({
@@ -15,7 +15,7 @@ export class HttpService {
 
   public getNearestPosition(positionUser: Place): Promise<Place> {
     return new Promise((res, rej) => {
-      const params = new HttpParams().set('lat', positionUser.lat.toString()).set('lon', positionUser.lon.toString());
+      const params = new HttpParams().set('lat', positionUser.posX.toString()).set('lon', positionUser.posY.toString());
       this.http.get('/nearestpoint', { params: params }).subscribe((position: Place) => {
         res(position);
       }, err => {
@@ -74,8 +74,8 @@ export class HttpService {
     return positions.map((_, i) => {
       if (i < positions.length - 1) {
         const params: HttpParams = new HttpParams()
-          .set('idStart', positions[i].id.toString())
-          .set('idEnd', positions[i + 1].id.toString());
+          .set('startId', positions[i].id.toString())
+          .set('endId', positions[i + 1].id.toString());
         return this.http.get<Path[]>('/path', { params: params });
       }
     }).filter(o => o);

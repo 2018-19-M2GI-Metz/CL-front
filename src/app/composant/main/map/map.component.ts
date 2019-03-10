@@ -71,8 +71,8 @@ export class MapComponent implements OnInit {
       const userPosition = await this.userLocationService.getUserLocation();
       const realPosition = this.getPosition(userPosition);
       const options = {
-        lat: realPosition ? realPosition.lat : 46.483440,
-        lng: realPosition ? realPosition.lon : 2.525914,
+        lat: realPosition ? realPosition.posX : 46.483440,
+        lng: realPosition ? realPosition.posY : 2.525914,
         zoom: this.getZoomState(userPosition),
         // style: "http://{s}.tile.osm.org/{z}/{x}/{y}.png"
       };
@@ -107,8 +107,8 @@ export class MapComponent implements OnInit {
   private drawPaths() {
     if (this.mapData.paths) {
       this.mapData.paths.forEach(path => {
-        const startPixels = this.map.latLngToPixel(path.start.lon, path.start.lat);
-        const endPixels = this.map.latLngToPixel(path.end.lon, path.end.lat);
+        const startPixels = this.map.latLngToPixel(path.startPlace.posY, path.startPlace.posX);
+        const endPixels = this.map.latLngToPixel(path.endPlace.posY, path.endPlace.posX);
         this.drawerService.path(startPixels, endPixels);
       });
     }
@@ -121,7 +121,7 @@ export class MapComponent implements OnInit {
   private async drawUserLocation() {
     const userPosition = await this.userLocationService.getUserLocation();
     if (userPosition) {
-      const positionPixels = this.map.latLngToPixel(userPosition.lat, userPosition.lon);
+      const positionPixels = this.map.latLngToPixel(userPosition.posX, userPosition.posY);
       this.drawerService.pointerUser(positionPixels);
     }
   }
@@ -129,7 +129,7 @@ export class MapComponent implements OnInit {
   private drawLocation() {
     if (this.mapData.pointersLocation) {
       this.mapData.pointersLocation.forEach(position => {
-        const positionPixels = this.map.latLngToPixel(position.lon, position.lat);
+        const positionPixels = this.map.latLngToPixel(position.posY, position.posX);
         this.drawerService.pointer(positionPixels);
       });
     }
@@ -137,7 +137,7 @@ export class MapComponent implements OnInit {
 
   private drawPositions() {
     this.positions.forEach(position => {
-      const positionPixels = this.map.latLngToPixel(position.lon, position.lat);
+      const positionPixels = this.map.latLngToPixel(position.posY, position.posX);
       this.drawerService.location(positionPixels);
     });
   }
