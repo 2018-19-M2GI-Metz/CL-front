@@ -19,7 +19,7 @@ export const ApiRest: IApiRest[] = [
         objectToReturn: (req) => {
             const idStart: number = +req.params.get('idStart');
             const idEnd: number = +req.params.get('idEnd');
-            return paths.find(path => path.start.id === idStart && path.end.id === idEnd);
+            return paths.find(path => path.startPlace.id === idStart && path.endPlace.id === idEnd);
         }
     },
     {
@@ -32,7 +32,7 @@ export const ApiRest: IApiRest[] = [
                 pathsBuild.push({ start: +params[i], end: +params[i + 1] });
             }
             pathsBuild.push({ start: +params[params.length - 1], end: +params[0] });
-            return pathsBuild.map((pathsId) => paths.find(path => path.start.id === pathsId.start && path.end.id === pathsId.end));
+            return pathsBuild.map((pathsId) => paths.find(path => path.startPlace.id === pathsId.start && path.endPlace.id === pathsId.end));
         }
     },
     {

@@ -5,6 +5,7 @@ import { Place } from 'model/place';
 import { Path } from 'model/path';
 import { HttpService } from 'services/http-service.service';
 import { knowCity, notAlreadyChoose } from './forms.validators';
+import { LogService } from 'services/log.service';
 
 export abstract class FormPanelUtils implements OnInit {
     public panelForm: FormGroup;
@@ -14,7 +15,7 @@ export abstract class FormPanelUtils implements OnInit {
     abstract current: number;
     abstract tabNumber: number;
 
-    constructor(protected http: HttpService, protected mapData: MapDataService) {
+    constructor(protected http: HttpService, protected mapData: MapDataService, protected logService: LogService) {
     }
 
     ngOnInit() {
@@ -56,7 +57,7 @@ export abstract class FormPanelUtils implements OnInit {
     private getPositionFromForms(): Promise<Place[][]> {
         return Promise.all(
             this.getCitiesNameFromForm()
-                .map((cityName: string) => this.http.search(cityName))
+                .map((cityName: string) => this.http.search(cityName.toLowerCase()))
         );
     }
 
@@ -73,6 +74,13 @@ export abstract class FormPanelUtils implements OnInit {
     protected async onSubmit(fn: (positions: Place[]) => Promise<Path[]>) {
         this.mapData.resetPaths();
         this.mapData.resetPointersLocations();
-        this.mapData.addPath(...await fn.call(this.http, (await this.getPositionFromForms()).map(place => place[0])));
+        const places: Place[] = (await this.getPositionFromForms()).map(place => place[0]);
+        places.forEach(place => {
+            if (!place) {
+                this.logService.set("Une des villes saisis n'existe pas.").asError().showPopUp().and.log();
+                throw new Error("Ville inconnue");
+            }
+        });
+        this.mapData.addPath(...await fn.call(this.http, places));
     }
 }

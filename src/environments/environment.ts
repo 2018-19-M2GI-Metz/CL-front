@@ -1,5 +1,5 @@
 export const environment = {
   production: false,
-  isServeurMock: true,
-  urlServeur: "127.0.0.1"
+  isServeurMock: false,
+  urlServeur: "localhost:8081/api"
 };

@@ -15,11 +15,11 @@ export class MapDataService {
   addPath(...paths: Path[]) {
     this.paths.push(...paths);
     if (paths.length === 1) {
-      this.addPointersLocations(paths[0].start, paths[0].end);
+      this.addPointersLocations(paths[0].startPlace, paths[0].endPlace);
     } else {
-      this.addPointersLocations(...paths.map(p => p.start));
-      if (paths[0].start.id !== paths[paths.length - 1].end.id) {
-        this.addPointersLocations(paths[paths.length - 1].end);
+      this.addPointersLocations(...paths.map(p => p.startPlace));
+      if (paths[0].startPlace.id !== paths[paths.length - 1].endPlace.id) {
+        this.addPointersLocations(paths[paths.length - 1].endPlace);
       }
     }
     this.notify();
