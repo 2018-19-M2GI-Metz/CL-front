@@ -132,7 +132,7 @@ export class MapComponent implements OnInit {
       this.userPosition = await this.userLocationService.getUserLocation();
       const realPosition = this.getPosition(this.userPosition);
       const options = {
-        lat: realPosition ? realPosition.poSX : 46.483440,
+        lat: realPosition ? realPosition.posX : 46.483440,
         lng: realPosition ? realPosition.posY : 2.525914,
         zoom: this.getZoomState(this.userPosition)
       };
