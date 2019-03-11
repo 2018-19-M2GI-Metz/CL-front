@@ -12,12 +12,26 @@ export abstract class FormPanelUtils implements OnInit {
     public villesSupp: string[] = [];
     public inputValidators: ValidatorFn[];
     public cities: Place[] = undefined;
+    abstract current: number;
+    abstract tabNumber: number;
 
     constructor(protected http: HttpService, protected mapData: MapDataService, protected logService: LogService) {
     }
 
     ngOnInit() {
         this.inputValidators = [Validators.required, Validators.minLength(1), knowCity(this.cities), notAlreadyChoose()];
+        this.mapData.onCityPushed().subscribe((city: Place) => {
+            if (this.current === this.tabNumber) {
+                const controls = Object.values(this.panelForm.controls);
+                if (controls.length > 2) {
+                    controls.push(controls.splice(1, 1)[0]);
+                }
+                const input = controls.find(control => control.value === "" || control.value === null);
+                if (input) {
+                    input.setValue(city.name);
+                }
+            }
+        });
     }
 
     public addCity() {

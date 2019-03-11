@@ -10,6 +10,7 @@ export class MapDataService {
   public paths: Path[] = [];
   public pointersLocation: Place[] = [];
   private change: Subject<any> = new Subject();
+  private cityPushed: Subject<any> = new Subject();
 
   addPath(...paths: Path[]) {
     this.paths.push(...paths);
@@ -45,5 +46,13 @@ export class MapDataService {
 
   private notify() {
     this.change.next();
+  }
+
+  public onCityPushed() {
+    return this.cityPushed.asObservable();
+  }
+
+  public pushCity(city: Place) {
+    this.cityPushed.next(city);
   }
 }

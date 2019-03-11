@@ -5,6 +5,7 @@ import { UserLocationService } from 'services/user-location.service';
 import { DrawerService } from 'services/drawer.service';
 import { MapDataService } from 'services/map-data.service';
 import { Subscription } from 'rxjs';
+import { HttpService } from 'services/http-service.service';
 
 const KEY = 'pk.eyJ1IjoiZGFuaWVscGF5ZXQiLCJhIjoiY2pvem1leGF0Mm1hOTN3cGhmbHM0b3p2ayJ9.s0Gdr8eabQi56tHONKv1Sg';
 
@@ -14,37 +15,47 @@ const KEY = 'pk.eyJ1IjoiZGFuaWVscGF5ZXQiLCJhIjoiY2pvem1leGF0Mm1hOTN3cGhmbHM0b3p2
   styleUrls: ['./map.component.scss']
 })
 export class MapComponent implements OnInit {
+
+  constructor(
+    private userLocationService: UserLocationService,
+    private drawerService: DrawerService,
+    private mapData: MapDataService,
+    private renderer: Renderer2,
+    private http: HttpService
+  ) {
+    this.mappa = new mappaMundi('Mapbox', KEY);
+  }
   @ViewChild("map") canvas: ElementRef;
   @ViewChild("container") container: ElementRef;
+  @ViewChild("popup") popup: ElementRef;
+  @ViewChild("popupValue") popupValue: ElementRef;
+
   private map;
   private positions: Place[] = [];
+  private userPosition: Place;
   private canvasTmp: ElementRef;
   private mapDataOnChange: Subscription;
   private zoomState: number = undefined;
   private positionMapState: Place = undefined;
   private mappa;
 
-  constructor(
-    private userLocationService: UserLocationService,
-    private drawerService: DrawerService,
-    private mapData: MapDataService,
-    private renderer: Renderer2) {
-    this.mappa = new mappaMundi('Mapbox', KEY);
-  }
+  private mapMouseClickState: undefined | "mouseDown" | "mouseMove";
+
+  private popupPosition: { lat: number, lng: number };
+  private popupCity: Place;
 
   async ngOnInit() {
     this.canvasTmp = this.canvas;
-    this.initPositions();
     await this.initMap();
     this.drawMap();
   }
 
-  @HostListener('window:resize', ['$event'])
-  onResize(event) {
+  @HostListener('window:resize')
+  onResize() {
     if (this.map) {
       this.zoomState = this.map.zoom();
       const position = this.map.fromPointToLatLng(Math.floor(window.innerWidth / 2), Math.floor(window.innerHeight / 2));
-      this.positionMapState = new Place(undefined, "curent_Position", position.lat, position.lng);
+      this.positionMapState = new Place(undefined, "current_Position", position.lat, position.lng);
       this.mapDataOnChange.unsubscribe();
       this.map.onChange(() => { });
     }
@@ -59,8 +70,58 @@ export class MapComponent implements OnInit {
     this.ngOnInit();
   }
 
-  private async initPositions() {
-    // this.positions.push(...await this.httpService.getAllPositions());
+  initMouseEvent() {
+    this.renderer.listen(this.container.nativeElement, 'mousedown', () => {
+      this.mapMouseClickState = "mouseDown";
+    });
+    this.renderer.listen(this.container.nativeElement, 'mousemove', () => {
+      if (this.mapMouseClickState === "mouseDown") {
+        this.mapMouseClickState = "mouseMove";
+      }
+    });
+    this.renderer.listen(this.container.nativeElement, 'mouseup', (event) => {
+      if (this.mapMouseClickState === "mouseDown") {
+        this.mapMouseClickState = "mouseMove";
+        this.popupPosition = this.map.fromPointToLatLng(event.clientX, event.clientY);
+        this.http.getNearestPosition(new Place(null, null, this.popupPosition.lat, this.popupPosition.lng)).then(
+          (city: Place) => {
+            this.popupCity = city;
+            this.createPopUp(city.name);
+            this.updatePopUpPosition();
+          });
+        this.mapMouseClickState = undefined;
+      }
+    });
+  }
+
+  private createPopUp(name: string) {
+    this.renderer.setStyle(this.popup.nativeElement, "display", "initial");
+    if (this.popupValue.nativeElement.childNodes.length > 0) {
+      this.renderer.removeChild(this.popupValue.nativeElement, this.popupValue.nativeElement.childNodes[0]);
+    }
+    this.renderer.appendChild(this.popupValue.nativeElement, this.renderer.createText(name.charAt(0).toUpperCase() + name.slice(1)));
+  }
+
+  public fermerPopUp() {
+    this.renderer.setStyle(this.popup.nativeElement, "display", "none");
+    if (this.popupValue.nativeElement.childNodes.length > 0) {
+      this.renderer.removeChild(this.popupValue.nativeElement, this.popupValue.nativeElement.childNodes[0]);
+    }
+    this.popupPosition = undefined;
+  }
+
+  private updatePopUpPosition() {
+    if (this.popupPosition) {
+      const position = this.map.latLngToPixel(this.popupPosition.lat, this.popupPosition.lng);
+      const sizeX = this.popup.nativeElement.offsetWidth / 2;
+      const sizeY = this.popup.nativeElement.offsetHeight;
+      this.renderer.setStyle(this.popup.nativeElement, "top", `${position.y - sizeY}px`);
+      this.renderer.setStyle(this.popup.nativeElement, "left", `${position.x - sizeX}px`);
+    }
+  }
+
+  public setLocalisation() {
+    this.mapData.pushCity(this.popupCity);
   }
 
   private initMap(): Promise<{}> {
@@ -68,13 +129,12 @@ export class MapComponent implements OnInit {
       this.drawerService.setContext(this.canvas.nativeElement.getContext("2d"));
       this.canvas.nativeElement.width = window.innerWidth;
       this.canvas.nativeElement.height = window.innerHeight;
-      const userPosition = await this.userLocationService.getUserLocation();
-      const realPosition = this.getPosition(userPosition);
+      this.userPosition = await this.userLocationService.getUserLocation();
+      const realPosition = this.getPosition(this.userPosition);
       const options = {
-        lat: realPosition ? realPosition.posX : 46.483440,
+        lat: realPosition ? realPosition.poSX : 46.483440,
         lng: realPosition ? realPosition.posY : 2.525914,
-        zoom: this.getZoomState(userPosition),
-        // style: "http://{s}.tile.osm.org/{z}/{x}/{y}.png"
+        zoom: this.getZoomState(this.userPosition)
       };
       this.map = this.mappa.tileMap(options);
       this.map.overlay(this.canvas.nativeElement);
@@ -97,6 +157,8 @@ export class MapComponent implements OnInit {
       this.drawLocation();
       this.drawPositions();
       this.drawPaths();
+      this.updatePopUpPosition();
+      this.initMouseEvent();
     };
     if (this.map) {
       this.map.onChange(updateDraw);
@@ -119,9 +181,8 @@ export class MapComponent implements OnInit {
   }
 
   private async drawUserLocation() {
-    const userPosition = await this.userLocationService.getUserLocation();
-    if (userPosition) {
-      const positionPixels = this.map.latLngToPixel(userPosition.posX, userPosition.posY);
+    if (this.userPosition) {
+      const positionPixels = this.map.latLngToPixel(this.userPosition.posX, this.userPosition.posY);
       this.drawerService.pointerUser(positionPixels);
     }
   }

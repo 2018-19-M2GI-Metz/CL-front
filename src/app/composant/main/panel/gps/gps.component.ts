@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Input } from '@angular/core';
 import { FormControl, FormGroup } from '@angular/forms';
 import { HttpService } from 'services/http-service.service';
 import { MapDataService } from 'services/map-data.service';
@@ -11,6 +11,8 @@ import { LogService } from 'services/log.service';
   styleUrls: ['./gps.component.scss']
 })
 export class GpsComponent extends FormPanelUtils implements OnInit {
+  @Input() current: number;
+  public tabNumber = 0;
 
   constructor(http: HttpService, mapData: MapDataService, logService: LogService) {
     super(http, mapData, logService);

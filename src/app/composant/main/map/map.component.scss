@@ -1,3 +1,26 @@
 :host {
     display: block;
 }
+
+.popUp {
+    background-color: white;
+    padding: 10px 25px 10px 10px;
+    border-radius: 4px;
+    display: inline-block;
+}
+
+.arrow-down {
+    width: 0;
+    height: 0;
+    border-left: 15px solid transparent;
+    border-right: 15px solid transparent;
+    border-top: 15px solid white;
+    margin: auto;
+}
+
+.closePopUp {
+    position: relative;
+    right: 20px;
+    top: -20px;
+    background: white;
+}

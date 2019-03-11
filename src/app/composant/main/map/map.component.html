@@ -1,3 +1,17 @@
 <div #container>
     <canvas #map></canvas>
 </div>
+
+<div #popup style="display:none; position: absolute">
+    <div class="popUp">
+        <button type="button" matPrefix (click)="setLocalisation()" mat-icon-button
+            matTooltip="Cliquez pour définir cette localisation">
+            <mat-icon>my_location</mat-icon>
+        </button>
+        <span #popupValue></span>
+    </div>
+    <button class="closePopUp" type="button" matPrefix (click)="fermerPopUp()" mat-icon-button matTooltip="Fermer">
+        <mat-icon>close</mat-icon>
+    </button>
+    <div class="arrow-down"></div>
+</div>
