@@ -63,9 +63,21 @@
             <code>src/app/model/path.ts</code>
         </p>
 
+            <p class="comment">
+                <h3>Description</h3>
+            </p>
+            <p class="comment">
+                <p>Représente un chemin entre deux lieux</p>
+
+            </p>
 
 
 
+            <p class="comment">
+                <h3>Example</h3>
+            </p>
+            <div class="io-description">
+            </div>
 
             <section>
     <h3 id="index">Index</h3>
@@ -80,10 +92,10 @@
                     <td class="col-md-4">
                         <ul class="index-list">
                             <li>
-                                <a href="#end">end</a>
+                                <a href="#endPlace">endPlace</a>
                             </li>
                             <li>
-                                <a href="#start">start</a>
+                                <a href="#startPlace">startPlace</a>
                             </li>
                         </ul>
                     </td>
@@ -108,11 +120,11 @@
             <tbody>
                 <tr>
                     <td class="col-md-4">
-                        <a name="end"></a>
+                        <a name="endPlace"></a>
                         <span class="name">
                             <b>
-                            end</b>
-                            <a href="#end"><span class="icon ion-ios-link"></span></a>
+                            endPlace</b>
+                            <a href="#endPlace"><span class="icon ion-ios-link"></span></a>
                         </span>
                     </td>
                 </tr>
@@ -124,7 +136,7 @@
                     </tr>
                         <tr>
                             <td class="col-md-4">
-                                    <div class="io-line">Defined in <a href="" data-line="5" class="link-to-prism">src/app/model/path.ts:5</a></div>
+                                    <div class="io-line">Defined in <a href="" data-line="9" class="link-to-prism">src/app/model/path.ts:9</a></div>
                             </td>
                         </tr>
 
@@ -135,11 +147,11 @@
             <tbody>
                 <tr>
                     <td class="col-md-4">
-                        <a name="start"></a>
+                        <a name="startPlace"></a>
                         <span class="name">
                             <b>
-                            start</b>
-                            <a href="#start"><span class="icon ion-ios-link"></span></a>
+                            startPlace</b>
+                            <a href="#startPlace"><span class="icon ion-ios-link"></span></a>
                         </span>
                     </td>
                 </tr>
@@ -151,7 +163,7 @@
                     </tr>
                         <tr>
                             <td class="col-md-4">
-                                    <div class="io-line">Defined in <a href="" data-line="4" class="link-to-prism">src/app/model/path.ts:4</a></div>
+                                    <div class="io-line">Defined in <a href="" data-line="8" class="link-to-prism">src/app/model/path.ts:8</a></div>
                             </td>
                         </tr>
 
@@ -172,9 +184,13 @@
     <div class="tab-pane fade  tab-source-code" id="c-source">
         <pre class="line-numbers compodoc-sourcecode"><code class="language-typescript">import { Place } from &#x27;./place&#x27;;
 
+/**
+ * Représente un chemin entre deux lieux
+ * @see Place
+ */
 export class Path {
-  start: Place;
-  end: Place;
+  startPlace: Place;
+  endPlace: Place;
 }
 </code></pre>
     </div>

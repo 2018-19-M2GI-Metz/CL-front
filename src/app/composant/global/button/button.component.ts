@@ -1,5 +1,8 @@
 import { Component, OnInit, Input } from '@angular/core';
 
+/**
+ * Composant qui affiche un bouton et gère ses états
+ */
 @Component({
   selector: 'cl-button',
   templateUrl: './button.component.html',

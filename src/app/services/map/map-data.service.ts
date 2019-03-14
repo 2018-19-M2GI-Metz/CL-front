@@ -3,6 +3,9 @@ import { Path } from 'model/path';
 import { Place } from 'model/place';
 import { Subject } from 'rxjs';
 
+/**
+ * Service qui permet la liaison entre la map et les panels
+ */
 @Injectable({
   providedIn: 'root'
 })
@@ -12,7 +15,11 @@ export class MapDataService {
   private change: Subject<any> = new Subject();
   private cityPushed: Subject<any> = new Subject();
 
-  addPath(...paths: Path[]) {
+  /**
+   * Ajoute un ou plusieurs chemin à dessiner
+   * @param paths - chemin(s) a ajouter
+   */
+  public addPath(...paths: Path[]) {
     this.paths.push(...paths);
     if (paths.length === 1) {
       this.addPointersLocations(paths[0].startPlace, paths[0].endPlace);
@@ -25,21 +32,34 @@ export class MapDataService {
     this.notify();
   }
 
-  resetPaths() {
-    this.paths = [];
-    this.notify();
-  }
 
-  addPointersLocations(...positions: Place[]) {
+
+  private addPointersLocations(...positions: Place[]) {
     this.pointersLocation.push(...positions);
     this.notify();
   }
 
-  resetPointersLocations() {
+  /**
+   * Supprime toutes les données de la précédente recherche.
+   */
+  public resetAll() {
+    this.resetPaths();
+    this.resetPointersLocations();
+  }
+
+  private resetPaths() {
+    this.paths = [];
+    this.notify();
+  }
+
+  private resetPointersLocations() {
     this.pointersLocation = [];
     this.notify();
   }
 
+  /**
+   * Permet d'écouter n'importe quel changement dans les données liées a la carte
+   */
   public onChange() {
     return this.change.asObservable();
   }
@@ -48,10 +68,17 @@ export class MapDataService {
     this.change.next();
   }
 
+  /**
+   * Permet d'écouter une sélection d'une ville depuis la carte
+   */
   public onCityPushed() {
     return this.cityPushed.asObservable();
   }
 
+  /**
+   * Ajouter une nouvelle ville en sélection
+   * @param city à selectionner
+   */
   public pushCity(city: Place) {
     this.cityPushed.next(city);
   }

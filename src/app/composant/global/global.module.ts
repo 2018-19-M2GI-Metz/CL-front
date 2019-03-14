@@ -11,6 +11,9 @@ import { ErreurPopUpComponent } from './erreur-pop-up/erreur-pop-up.component';
 import { MatAutocompleteModule } from '@angular/material/autocomplete';
 import { PipesModule } from 'src/app/pipes/pipes.module';
 
+/**
+ * Tout composant qui peux être utilisé dans n'importe quel partie de l'application
+ */
 @NgModule({
   declarations: [
     ButtonComponent,

@@ -60,6 +60,13 @@
             <code>src/app/mock-backend/mock-backend-interceptor.ts</code>
         </p>
 
+            <p class="comment">
+                <h3>Description</h3>
+            </p>
+            <p class="comment">
+                <p>Dans le cas où on utilise pas le serveur</p>
+
+            </p>
 
 
             <section>
@@ -101,7 +108,7 @@
                 </tr>
                         <tr>
                             <td class="col-md-4">
-                                <div class="io-line">Defined in <a href="" data-line="9" class="link-to-prism">src/app/mock-backend/mock-backend-interceptor.ts:9</a></div>
+                                <div class="io-line">Defined in <a href="" data-line="12" class="link-to-prism">src/app/mock-backend/mock-backend-interceptor.ts:12</a></div>
                             </td>
                         </tr>
 
@@ -166,8 +173,8 @@
 
             <tr>
                 <td class="col-md-4">
-                    <div class="io-line">Defined in <a href="" data-line="13"
-                            class="link-to-prism">src/app/mock-backend/mock-backend-interceptor.ts:13</a></div>
+                    <div class="io-line">Defined in <a href="" data-line="16"
+                            class="link-to-prism">src/app/mock-backend/mock-backend-interceptor.ts:16</a></div>
                 </td>
             </tr>
 
@@ -235,10 +242,13 @@
         <pre class="line-numbers compodoc-sourcecode"><code class="language-typescript">import { HttpEvent, HttpHandler, HttpInterceptor, HttpRequest, HttpResponse } from &#x27;@angular/common/http&#x27;;
 import { Injectable } from &#x27;@angular/core&#x27;;
 import { Observable, of } from &#x27;rxjs&#x27;;
-import { LogService } from &#x27;services/log.service&#x27;;
+import { LogService } from &#x27;services/logger/log.service&#x27;;
 import { environment } from &#x27;../../environments/environment&#x27;;
 import { IApiRest, ApiRest } from &#x27;./api&#x27;;
 
+/**
+ * Dans le cas où on utilise pas le serveur
+ */
 @Injectable()
 class MockBackendInterceptor implements HttpInterceptor {
 
@@ -247,7 +257,13 @@ class MockBackendInterceptor implements HttpInterceptor {
     intercept(request: HttpRequest&lt;any&gt;, next: HttpHandler): Observable&lt;HttpEvent&lt;any&gt;&gt; {
         const api: IApiRest &#x3D; ApiRest.find(apiRest &#x3D;&gt; request.url.endsWith(apiRest.url) &amp;&amp; request.method &#x3D;&#x3D;&#x3D; apiRest.method);
         if (api) {
-            return of(new HttpResponse({ status: 200, body: api.objectToReturn.call(undefined, request) }));
+            const body &#x3D; api.objectToReturn.call(undefined, request);
+            if (body) {
+                return of(new HttpResponse({ status: 200, body: body }));
+            } else {
+                this.logService.set(&quot;Une erreur c&#x27;est produite.&quot;).asError().and.showPopUp().and.log();
+                return of(new HttpResponse({ status: 500, body: {} }));
+            }
         } else {
             this.logService.set(&quot;Une erreur c&#x27;est produite lors &quot;, &quot; : l&#x27;url n&#x27;est pas connu : &quot; + request.url).asError().and.showPopUp().and.log();
             return of(new HttpResponse({ status: 404, body: {} }));
@@ -255,6 +271,9 @@ class MockBackendInterceptor implements HttpInterceptor {
     }
 }
 
+/**
+ * Dans le cas où on utilise le serveur
+ */
 @Injectable()
 class EmptyBackendInterceptor implements HttpInterceptor {
 
@@ -266,6 +285,9 @@ class EmptyBackendInterceptor implements HttpInterceptor {
     }
 }
 
+/**
+ * Permet de définir si on utilise ou non le serveur
+ */
 export function mockBackEndInterceptorFactory(logService: LogService) {
     if (environment.isServeurMock) {
         return new MockBackendInterceptor(logService);

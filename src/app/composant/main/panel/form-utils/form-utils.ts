@@ -1,12 +1,15 @@
 import { FormGroup, ValidatorFn, Validators, FormControl } from '@angular/forms';
-import { MapDataService } from 'services/map-data.service';
+import { MapDataService } from 'services/map/map-data.service';
 import { OnInit } from '@angular/core';
 import { Place } from 'model/place';
 import { Path } from 'model/path';
-import { HttpService } from 'services/http-service.service';
-import { knowCity, notAlreadyChoose } from './forms.validators';
-import { LogService } from 'services/log.service';
+import { HttpService } from 'services/http/http-service.service';
+import { notAlreadyChoose } from './forms.validators';
+import { LogService } from 'services/logger/log.service';
 
+/**
+ * Classe comportant les fonctions permettant le traitement de formalaire de recherche de chemin
+ */
 export abstract class FormPanelUtils implements OnInit {
     public panelForm: FormGroup;
     public villesSupp: string[] = [];
@@ -19,7 +22,7 @@ export abstract class FormPanelUtils implements OnInit {
     }
 
     ngOnInit() {
-        this.inputValidators = [Validators.required, Validators.minLength(1), knowCity(this.cities), notAlreadyChoose()];
+        this.inputValidators = [Validators.required, Validators.minLength(1), notAlreadyChoose()];
         this.mapData.onCityPushed().subscribe((city: Place) => {
             if (this.current === this.tabNumber) {
                 const controls = Object.values(this.panelForm.controls);
@@ -72,8 +75,7 @@ export abstract class FormPanelUtils implements OnInit {
     }
 
     protected async onSubmit(fn: (positions: Place[]) => Promise<Path[]>) {
-        this.mapData.resetPaths();
-        this.mapData.resetPointersLocations();
+        this.mapData.resetAll();
         const places: Place[] = (await this.getPositionFromForms()).map(place => place[0]);
         places.forEach(place => {
             if (!place) {

@@ -8,7 +8,7 @@ import { mockBackEndInterceptorFactory } from './mock-backend/mock-backend-inter
 import { AppComponent } from './app.component';
 import { MatDialogModule } from '@angular/material/dialog';
 import { GlobalModule } from './composant/global/global.module';
-import { LogService } from 'services/log.service';
+import { LogService } from 'services/logger/log.service';
 
 @NgModule({
   imports: [

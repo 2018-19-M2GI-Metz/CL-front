@@ -6,9 +6,9 @@ import { Path } from "model/path";
 /**
  * Villes disponibles dans l'application.
  */
-export const PARIS = { name: "paris", id: 1, posX: 48.856783, posY: 2.348773 };
-export const METZ = { name: "metz", id: 2, posX: 49.119457, posY: 6.175982 };
-export const CHARLEVILLE = { name: "charleville", id: 3, posX: 49.762460, posY: 4.722300 };
+export const PARIS = { name: "paris", id: 1, posX: 2.348773, posY: 48.856783 };
+export const METZ = { name: "metz", id: 2, posX: 6.175982, posY: 49.119457 };
+export const CHARLEVILLE = { name: "charleville", id: 3, posX: 4.722300, posY: 49.762460 };
 
 export const cities: Place[] = [PARIS, METZ, CHARLEVILLE];
 

@@ -1,5 +1,8 @@
-import { Component, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
 
+/**
+ * Composant qui contient les panneaux de recherche
+ */
 @Component({
   selector: 'cl-panel',
   templateUrl: './panel.component.html',

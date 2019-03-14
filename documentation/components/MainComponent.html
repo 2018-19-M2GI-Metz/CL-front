@@ -64,6 +64,13 @@
     <code>src/app/composant/main/main.component.ts</code>
 </p>
 
+    <p class="comment">
+        <h3>Description</h3>
+    </p>
+    <p class="comment">
+        <p>Fenetre principal de l&#39;application</p>
+
+    </p>
 
 
 
@@ -140,9 +147,11 @@
                     <td class="col-md-4">
                         <ul class="index-list">
                             <li>
+                                    <span class="modifier">Public</span>
                                 <a href="#closePanel">closePanel</a>
                             </li>
                             <li>
+                                    <span class="modifier">Public</span>
                                 <a href="#getMenuProperties">getMenuProperties</a>
                             </li>
                             <li>
@@ -150,6 +159,7 @@
                                 <a href="#isSmallScreen">isSmallScreen</a>
                             </li>
                             <li>
+                                    <span class="modifier">Public</span>
                                 <a href="#openPanel">openPanel</a>
                             </li>
                         </ul>
@@ -181,6 +191,7 @@
                     <a name="closePanel"></a>
                     <span class="name">
                         <b>
+                            <span class="modifier">Public</span>
                             closePanel
                         </b>
                         <a href="#closePanel"><span class="icon ion-ios-link"></span></a>
@@ -189,15 +200,16 @@
             </tr>
             <tr>
                 <td class="col-md-4">
-<code>closePanel()</code>
+                    <span class="modifier-icon icon ion-ios-reset"></span>
+                    <code>closePanel()</code>
                 </td>
             </tr>
 
 
             <tr>
                 <td class="col-md-4">
-                    <div class="io-line">Defined in <a href="" data-line="19"
-                            class="link-to-prism">src/app/composant/main/main.component.ts:19</a></div>
+                    <div class="io-line">Defined in <a href="" data-line="22"
+                            class="link-to-prism">src/app/composant/main/main.component.ts:22</a></div>
                 </td>
             </tr>
 
@@ -220,6 +232,7 @@
                     <a name="getMenuProperties"></a>
                     <span class="name">
                         <b>
+                            <span class="modifier">Public</span>
                             getMenuProperties
                         </b>
                         <a href="#getMenuProperties"><span class="icon ion-ios-link"></span></a>
@@ -228,15 +241,16 @@
             </tr>
             <tr>
                 <td class="col-md-4">
-<code>getMenuProperties()</code>
+                    <span class="modifier-icon icon ion-ios-reset"></span>
+                    <code>getMenuProperties()</code>
                 </td>
             </tr>
 
 
             <tr>
                 <td class="col-md-4">
-                    <div class="io-line">Defined in <a href="" data-line="23"
-                            class="link-to-prism">src/app/composant/main/main.component.ts:23</a></div>
+                    <div class="io-line">Defined in <a href="" data-line="26"
+                            class="link-to-prism">src/app/composant/main/main.component.ts:26</a></div>
                 </td>
             </tr>
 
@@ -276,8 +290,8 @@
 
             <tr>
                 <td class="col-md-4">
-                    <div class="io-line">Defined in <a href="" data-line="11"
-                            class="link-to-prism">src/app/composant/main/main.component.ts:11</a></div>
+                    <div class="io-line">Defined in <a href="" data-line="14"
+                            class="link-to-prism">src/app/composant/main/main.component.ts:14</a></div>
                 </td>
             </tr>
 
@@ -300,6 +314,7 @@
                     <a name="openPanel"></a>
                     <span class="name">
                         <b>
+                            <span class="modifier">Public</span>
                             openPanel
                         </b>
                         <a href="#openPanel"><span class="icon ion-ios-link"></span></a>
@@ -308,15 +323,16 @@
             </tr>
             <tr>
                 <td class="col-md-4">
-<code>openPanel()</code>
+                    <span class="modifier-icon icon ion-ios-reset"></span>
+                    <code>openPanel()</code>
                 </td>
             </tr>
 
 
             <tr>
                 <td class="col-md-4">
-                    <div class="io-line">Defined in <a href="" data-line="15"
-                            class="link-to-prism">src/app/composant/main/main.component.ts:15</a></div>
+                    <div class="io-line">Defined in <a href="" data-line="18"
+                            class="link-to-prism">src/app/composant/main/main.component.ts:18</a></div>
                 </td>
             </tr>
 
@@ -358,7 +374,7 @@
                     </tr>
                         <tr>
                             <td class="col-md-4">
-                                    <div class="io-line">Defined in <a href="" data-line="9" class="link-to-prism">src/app/composant/main/main.component.ts:9</a></div>
+                                    <div class="io-line">Defined in <a href="" data-line="12" class="link-to-prism">src/app/composant/main/main.component.ts:12</a></div>
                             </td>
                         </tr>
 
@@ -371,8 +387,11 @@
 
 
     <div class="tab-pane fade  tab-source-code" id="c-source">
-        <pre class="line-numbers compodoc-sourcecode"><code class="language-typescript">import { Component, OnInit, ViewChild, ElementRef } from &#x27;@angular/core&#x27;;
+        <pre class="line-numbers compodoc-sourcecode"><code class="language-typescript">import { Component } from &#x27;@angular/core&#x27;;
 
+/**
+ * Fenetre principal de l&#x27;application
+ */
 @Component({
   selector: &#x27;cl-main&#x27;,
   templateUrl: &#x27;./main.component.html&#x27;,
@@ -385,15 +404,15 @@ export class MainComponent {
     return window.innerWidth &lt; 640;
   }
 
-  openPanel() {
+  public openPanel() {
     this.isMenuOpen &#x3D; true;
   }
 
-  closePanel() {
+  public closePanel() {
     this.isMenuOpen &#x3D; false;
   }
 
-  getMenuProperties() {
+  public getMenuProperties() {
     if (this.isSmallScreen()) {
       return {
         &#x27;display&#x27;: this.isMenuOpen ? &#x27;block&#x27; : &#x27;none&#x27;,
@@ -418,7 +437,10 @@ export class MainComponent {
     &lt;/button&gt;
 &lt;/mat-toolbar&gt;
 &lt;cl-map&gt;&lt;/cl-map&gt;
-&lt;cl-panel [ngStyle]&#x3D;&quot;getMenuProperties()&quot;&gt;&lt;/cl-panel&gt;</code></pre>
+&lt;cl-panel [ngStyle]&#x3D;&quot;getMenuProperties()&quot;&gt;&lt;/cl-panel&gt;
+&lt;div id&#x3D;&quot;doc&quot;&gt;
+    &lt;a href&#x3D;&quot;/documentation&quot; routerLinkActive&#x3D;&quot;router-link-active&quot;&gt;Documentation&lt;/a&gt;
+&lt;/div&gt;</code></pre>
     </div>
 
     <div class="tab-pane fade " id="c-styleData">
@@ -446,6 +468,22 @@ cl-panel {
     height: 90%;
     position: absolute;
     transition: width 1.5s;
+}
+
+#doc {
+    background-color: white;
+    color: cornflowerblue;
+    width: auto;
+    position: absolute;
+    float: bottom;
+    z-index: 500;
+    left: 10px;
+    bottom: 10px;
+    padding: .2rem;
+    border-radius: 4px;
+    a {
+        text-decoration: none;
+    }
 }
 
 @media (max-width: 900px) {
@@ -497,7 +535,7 @@ cl-panel {
 <script src="../js/libs/htmlparser.js"></script>
 <script src="../js/libs/deep-iterator.js"></script>
 <script>
-        var COMPONENT_TEMPLATE = '<div><mat-toolbar *ngIf="isSmallScreen()" color="primary">    <span>M2GI Map</span>    <span id="fill"></span>    <button *ngIf="!isMenuOpen" mat-icon-button (click)="openPanel()">        <mat-icon>directions</mat-icon>    </button>    <button *ngIf="isMenuOpen" mat-icon-button (click)="closePanel()">        <mat-icon>map</mat-icon>    </button></mat-toolbar><cl-map></cl-map><cl-panel [ngStyle]="getMenuProperties()"></cl-panel></div>'
+        var COMPONENT_TEMPLATE = '<div><mat-toolbar *ngIf="isSmallScreen()" color="primary">    <span>M2GI Map</span>    <span id="fill"></span>    <button *ngIf="!isMenuOpen" mat-icon-button (click)="openPanel()">        <mat-icon>directions</mat-icon>    </button>    <button *ngIf="isMenuOpen" mat-icon-button (click)="closePanel()">        <mat-icon>map</mat-icon>    </button></mat-toolbar><cl-map></cl-map><cl-panel [ngStyle]="getMenuProperties()"></cl-panel><div id="doc">    <a href="/documentation" routerLinkActive="router-link-active">Documentation</a></div></div>'
     var COMPONENTS = [{'name': 'AppComponent', 'selector': 'cl-app'},{'name': 'ButtonComponent', 'selector': 'cl-button'},{'name': 'ErreurPopUpComponent', 'selector': 'cl-erreur-pop-up'},{'name': 'GpsComponent', 'selector': 'cl-gps'},{'name': 'InputComponent', 'selector': 'cl-input'},{'name': 'MainComponent', 'selector': 'cl-main'},{'name': 'MapComponent', 'selector': 'cl-map'},{'name': 'PanelComponent', 'selector': 'cl-panel'},{'name': 'TspComponent', 'selector': 'cl-tsp'}];
     var DIRECTIVES = [];
     var ACTUAL_COMPONENT = {'name': 'MainComponent'};

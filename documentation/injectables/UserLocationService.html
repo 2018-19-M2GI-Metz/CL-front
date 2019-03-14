@@ -56,9 +56,16 @@
             <h3>File</h3>
         </p>
         <p class="comment">
-            <code>src/app/services/user-location.service.ts</code>
+            <code>src/app/services/user-location/user-location.service.ts</code>
         </p>
 
+            <p class="comment">
+                <h3>Description</h3>
+            </p>
+            <p class="comment">
+                <p>Service permettant la gestion de la position de l&#39;utilisateur</p>
+
+            </p>
 
 
 
@@ -66,6 +73,26 @@
     <h3 id="index">Index</h3>
     <table class="table table-sm table-bordered index-table">
         <tbody>
+                <tr>
+                    <td class="col-md-4">
+                        <h6><b>Properties</b></h6>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <ul class="index-list">
+                            <li>
+                                    <span class="modifier">Private</span>
+                                    <span class="modifier">Readonly</span>
+                                <a href="#defaultPlace">defaultPlace</a>
+                            </li>
+                            <li>
+                                    <span class="modifier">Private</span>
+                                <a href="#userPosition">userPosition</a>
+                            </li>
+                        </ul>
+                    </td>
+                </tr>
 
                 <tr>
                     <td class="col-md-4">
@@ -78,6 +105,10 @@
                             <li>
                                     <span class="modifier">Public</span>
                                 <a href="#getUserLocation">getUserLocation</a>
+                            </li>
+                            <li>
+                                    <span class="modifier">Public</span>
+                                <a href="#initUserPosition">initUserPosition</a>
                             </li>
                         </ul>
                     </td>
@@ -102,7 +133,7 @@
                 </tr>
                         <tr>
                             <td class="col-md-4">
-                                <div class="io-line">Defined in <a href="" data-line="8" class="link-to-prism">src/app/services/user-location.service.ts:8</a></div>
+                                <div class="io-line">Defined in <a href="" data-line="15" class="link-to-prism">src/app/services/user-location/user-location.service.ts:15</a></div>
                             </td>
                         </tr>
 
@@ -169,8 +200,56 @@
 
             <tr>
                 <td class="col-md-4">
-                    <div class="io-line">Defined in <a href="" data-line="12"
-                            class="link-to-prism">src/app/services/user-location.service.ts:12</a></div>
+                    <div class="io-line">Defined in <a href="" data-line="41"
+                            class="link-to-prism">src/app/services/user-location/user-location.service.ts:41</a></div>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+
+                    <div>
+                    </div>
+                    <div class="io-description">
+                        <b>Returns : </b>        <code><a href="../classes/Place.html" target="_self" >Observable&lt;Place&gt;</a></code>
+
+                    </div>
+                    <div class="io-description">
+                        <p>la position de l&#39;utilisateur
+Si position indisponible Place(undefined, undefined, 0, 0)</p>
+
+                    </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="initUserPosition"></a>
+                    <span class="name">
+                        <b>
+                            <span class="modifier">Public</span>
+                            initUserPosition
+                        </b>
+                        <a href="#initUserPosition"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+                    <span class="modifier-icon icon ion-ios-reset"></span>
+                    <code>initUserPosition()</code>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-line">Defined in <a href="" data-line="22"
+                            class="link-to-prism">src/app/services/user-location/user-location.service.ts:22</a></div>
                 </td>
             </tr>
 
@@ -179,13 +258,75 @@
                 <td class="col-md-4">
 
                     <div class="io-description">
-                        <b>Returns : </b>        <code><a href="../classes/Place.html" target="_self" >Promise&lt;Place&gt;</a></code>
+                        <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
 
                     </div>
                 </td>
             </tr>
         </tbody>
     </table>
+</section>
+            <section>
+    
+        <h3 id="inputs">
+            Properties
+        </h3>
+        <table class="table table-sm table-bordered">
+            <tbody>
+                <tr>
+                    <td class="col-md-4">
+                        <a name="defaultPlace"></a>
+                        <span class="name">
+                            <b>
+                                <span class="modifier">Private</span>
+                                <span class="modifier">Readonly</span>
+                            defaultPlace</b>
+                            <a href="#defaultPlace"><span class="icon ion-ios-link"></span></a>
+                        </span>
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                            <i>Default value : </i><code>new Place(undefined, undefined, 0, 0)</code>
+                        </td>
+                    </tr>
+                        <tr>
+                            <td class="col-md-4">
+                                    <div class="io-line">Defined in <a href="" data-line="15" class="link-to-prism">src/app/services/user-location/user-location.service.ts:15</a></div>
+                            </td>
+                        </tr>
+
+
+            </tbody>
+        </table>
+        <table class="table table-sm table-bordered">
+            <tbody>
+                <tr>
+                    <td class="col-md-4">
+                        <a name="userPosition"></a>
+                        <span class="name">
+                            <b>
+                                <span class="modifier">Private</span>
+                            userPosition</b>
+                            <a href="#userPosition"><span class="icon ion-ios-link"></span></a>
+                        </span>
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                            <i>Type : </i>        <code><a href="../classes/Place.html" target="_self" >ReplaySubject&lt;Place&gt;</a></code>
+
+                        </td>
+                    </tr>
+                        <tr>
+                            <td class="col-md-4">
+                                    <div class="io-line">Defined in <a href="" data-line="14" class="link-to-prism">src/app/services/user-location/user-location.service.ts:14</a></div>
+                            </td>
+                        </tr>
+
+
+            </tbody>
+        </table>
 </section>
 
     </div>
@@ -194,30 +335,46 @@
     <div class="tab-pane fade  tab-source-code" id="c-source">
         <pre class="line-numbers compodoc-sourcecode"><code class="language-typescript">import { Injectable } from &#x27;@angular/core&#x27;;
 import { Place } from &#x27;model/place&#x27;;
-import { LogService } from &#x27;./log.service&#x27;;
+import { ReplaySubject, Observable } from &#x27;rxjs&#x27;;
+import { LogService } from &#x27;services/logger/log.service&#x27;;
+import { tap } from &#x27;rxjs/operators&#x27;;
 
+/**
+ * Service permettant la gestion de la position de l&#x27;utilisateur
+ */
 @Injectable({
   providedIn: &#x27;root&#x27;
 })
 export class UserLocationService {
+  private userPosition: ReplaySubject&lt;Place&gt;;
+  private readonly defaultPlace &#x3D; new Place(undefined, undefined, 0, 0);
 
-  constructor(private logService: LogService) { }
+  constructor(private logService: LogService) {
+    this.userPosition &#x3D; new ReplaySubject();
+    this.initUserPosition();
+  }
 
-  public getUserLocation(): Promise&lt;Place&gt; {
-    return new Promise((res) &#x3D;&gt; {
-      if (navigator.geolocation) {
-        navigator.geolocation.getCurrentPosition(position &#x3D;&gt; {
-          res(new Place(undefined, undefined, position.coords.latitude, position.coords.longitude));
-        },
-          err &#x3D;&gt; {
-            this.logService.set(&quot;La geolocation n&#x27;est pas disponible :&quot;, err.message).asWarn().and.log();
-            res(undefined);
-          });
-      } else {
-        this.logService.set(&quot;La geolocation n&#x27;est pas disponible sur ce navigateur&quot;).asWarn().and.log();
-        res(undefined);
-      }
-    });
+  public initUserPosition() {
+    if (navigator.geolocation) {
+      navigator.geolocation.getCurrentPosition(position &#x3D;&gt; {
+        this.userPosition.next(new Place(undefined, undefined, position.coords.latitude, position.coords.longitude));
+      },
+        err &#x3D;&gt; {
+          this.logService.set(&quot;La geolocation n&#x27;est pas disponible :&quot;, err.message).asWarn().and.log();
+          this.userPosition.next(this.defaultPlace);
+        });
+    } else {
+      this.logService.set(&quot;La geolocation n&#x27;est pas disponible sur ce navigateur&quot;).asWarn().and.log();
+      this.userPosition.next(this.defaultPlace);
+    }
+  }
+
+  /**
+   * @returns la position de l&#x27;utilisateur
+   * Si position indisponible Place(undefined, undefined, 0, 0)
+   */
+  public getUserLocation(): Observable&lt;Place&gt; {
+    return this.userPosition.asObservable();
   }
 }
 </code></pre>

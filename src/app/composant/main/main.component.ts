@@ -1,5 +1,8 @@
-import { Component, OnInit, ViewChild, ElementRef } from '@angular/core';
+import { Component } from '@angular/core';
 
+/**
+ * Fenetre principal de l'application
+ */
 @Component({
   selector: 'cl-main',
   templateUrl: './main.component.html',
@@ -12,15 +15,15 @@ export class MainComponent {
     return window.innerWidth < 640;
   }
 
-  openPanel() {
+  public openPanel() {
     this.isMenuOpen = true;
   }
 
-  closePanel() {
+  public closePanel() {
     this.isMenuOpen = false;
   }
 
-  getMenuProperties() {
+  public getMenuProperties() {
     if (this.isSmallScreen()) {
       return {
         'display': this.isMenuOpen ? 'block' : 'none',

@@ -11,14 +11,14 @@ export const ApiRest: IApiRest[] = [
     {
         url: "/positions",
         method: "GET",
-        objectToReturn: (req) => [PARIS, METZ, CHARLEVILLE]
+        objectToReturn: () => [PARIS, METZ, CHARLEVILLE]
     },
     {
         url: "/path",
         method: "GET",
         objectToReturn: (req) => {
-            const idStart: number = +req.params.get('idStart');
-            const idEnd: number = +req.params.get('idEnd');
+            const idStart: number = +req.params.get('startId');
+            const idEnd: number = +req.params.get('endId');
             return paths.find(path => path.startPlace.id === idStart && path.endPlace.id === idEnd);
         }
     },

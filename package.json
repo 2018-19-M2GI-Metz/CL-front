@@ -12,7 +12,8 @@
     "build:apps": "cd cordova && cordova build --release",
     "start:electron": "cd cordova && cordova run cordova-electron",
     "start:android": "cd cordova & cordova run android",
-    "lint": "ng lint --fix"
+    "lint": "ng lint --fix",
+    "generate:doc": "compodoc -p src/tsconfig.app.json"
   },
   "private": true,
   "main": "main.js",

@@ -1,12 +1,13 @@
-import { Component, Input, forwardRef, Output, EventEmitter, OnInit } from '@angular/core';
+import { Component, Input, forwardRef, Output, EventEmitter } from '@angular/core';
 import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
-import { Observable, Subject } from 'rxjs';
-import { startWith, map } from 'rxjs/operators';
-import { HttpService } from 'services/http-service.service';
-import { MapDataService } from 'services/map-data.service';
+import { Subject } from 'rxjs';
+import { HttpService } from 'services/http/http-service.service';
 import { Place } from 'model/place';
-import { UserLocationService } from 'services/user-location.service';
+import { UserLocationService } from 'services/user-location/user-location.service';
 
+/**
+ * Composant qui gère les champs d'entrées des différents panels
+ */
 @Component({
   selector: 'cl-input',
   templateUrl: './input.component.html',
@@ -74,8 +75,10 @@ export class InputComponent implements ControlValueAccessor {
     return this.http.search(value);
   }
 
-  public async getUserLocation() {
-    const nearestPoint: Place = await this.http.getNearestPosition(await this.userLocationService.getUserLocation());
-    this.value = (await this.http.search(nearestPoint.name))[0].name;
+  public getUserLocation() {
+    this.userLocationService.getUserLocation().subscribe(async (position: Place) => {
+      const nearestPoint: Place = await this.http.getNearestPosition(position);
+      this.value = (await this.http.search(nearestPoint.name))[0].name;
+    });
   }
 }

@@ -1,12 +1,8 @@
-import { AbstractControl, ValidatorFn, FormGroup } from "@angular/forms";
-import { Place } from "model/place";
+import { AbstractControl, ValidatorFn } from "@angular/forms";
 
-export function knowCity(cites: Place[]): ValidatorFn {
-    return (control: AbstractControl): { [key: string]: any } | null => {
-        return cites && !cites.some(city => city.name === control.value) ? { 'cityInexist': { value: control.value } } : null;
-    };
-}
-
+/**
+ * Valide si le ville n'est pas déjà séléctionné
+ */
 export function notAlreadyChoose(): ValidatorFn {
     return (control: AbstractControl): { [key: string]: any } | null => {
         if (control.parent) {

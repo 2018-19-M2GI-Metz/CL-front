@@ -1,9 +1,13 @@
 import { Component, OnInit, Input } from '@angular/core';
 import { FormControl, FormGroup } from '@angular/forms';
-import { HttpService } from 'services/http-service.service';
-import { MapDataService } from 'services/map-data.service';
+import { HttpService } from 'services/http/http-service.service';
+import { MapDataService } from 'services/map/map-data.service';
 import { FormPanelUtils } from '../form-utils/form-utils';
-import { LogService } from 'services/log.service';
+import { LogService } from 'services/logger/log.service';
+
+/**
+ * Composant qui permet le calcul du chemin TSP
+ */
 @Component({
   selector: 'cl-tsp',
   templateUrl: './tsp.component.html',

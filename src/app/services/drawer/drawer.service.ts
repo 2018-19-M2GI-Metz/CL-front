@@ -1,12 +1,19 @@
 import { Injectable } from '@angular/core';
-import { UserPointerIcons, LocationPointerIcons } from '../composant/main/map/icones/icones';
+import { UserPointerIcons, LocationPointerIcons } from '../../composant/main/map/icones/icones';
 
+/**
+ * Couleurs disponibles pour les dessins
+ */
 const COLORS = {
   blue1: "rgba(63, 81, 188, 0.9)",
   blue2: "rgba(63, 81, 188, 0.7)",
   blue3: "rgba(63, 81, 188, 0.5)",
   white: "rgba(255, 255, 255, 0.6)",
 };
+
+/**
+ * Service qui s'occupe de dessiner les différentes signalitique de la carte
+ */
 @Injectable({
   providedIn: 'root'
 })
@@ -32,27 +39,27 @@ export class DrawerService {
     this.locationPointerImage.onload = () => { };
   }
 
-  setContext(context: any) {
+  public setContext(context: any) {
     this.ctx = context;
   }
 
-  clear() {
+  public clear() {
     this.ctx.clearRect(0, 0, window.innerWidth, window.innerHeight);
   }
 
-  pointerUser(position: any) {
+  public pointerUser(position: any) {
     const widthOffset = this.userPointerImage.width / 2 - 10;
     const heightOffset = this.userPointerImage.height / 2;
     this.ctx.drawImage(this.userPointerImage, position.x - widthOffset, position.y - heightOffset);
   }
 
-  pointer(position: any) {
+  public pointer(position: any) {
     const widthOffset = this.userPointerImage.width / 2 - 10;
     const heightOffset = this.userPointerImage.height / 2;
     this.ctx.drawImage(this.locationPointerImage, position.x - widthOffset, position.y - heightOffset);
   }
 
-  location(position: any) {
+  public location(position: any) {
     this.ctx.beginPath();
     this.ctx.lineWidth = "1";
     this.ctx.strokeStyle = COLORS.blue1;
@@ -75,7 +82,7 @@ export class DrawerService {
     this.ctx.stroke();
   }
 
-  path(start: any, end: any) {
+  public path(start: any, end: any) {
     this.ctx.beginPath();
     this.ctx.strokeStyle = COLORS.blue1;
     this.ctx.moveTo(start.x, start.y);

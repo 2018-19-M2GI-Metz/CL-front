@@ -56,9 +56,16 @@
             <h3>File</h3>
         </p>
         <p class="comment">
-            <code>src/app/services/map-data.service.ts</code>
+            <code>src/app/services/map/map-data.service.ts</code>
         </p>
 
+            <p class="comment">
+                <h3>Description</h3>
+            </p>
+            <p class="comment">
+                <p>Service qui permet la liaison entre la map et les panels</p>
+
+            </p>
 
 
 
@@ -103,9 +110,11 @@
                     <td class="col-md-4">
                         <ul class="index-list">
                             <li>
+                                    <span class="modifier">Public</span>
                                 <a href="#addPath">addPath</a>
                             </li>
                             <li>
+                                    <span class="modifier">Private</span>
                                 <a href="#addPointersLocations">addPointersLocations</a>
                             </li>
                             <li>
@@ -125,9 +134,15 @@
                                 <a href="#pushCity">pushCity</a>
                             </li>
                             <li>
+                                    <span class="modifier">Public</span>
+                                <a href="#resetAll">resetAll</a>
+                            </li>
+                            <li>
+                                    <span class="modifier">Private</span>
                                 <a href="#resetPaths">resetPaths</a>
                             </li>
                             <li>
+                                    <span class="modifier">Private</span>
                                 <a href="#resetPointersLocations">resetPointersLocations</a>
                             </li>
                         </ul>
@@ -155,6 +170,7 @@
                     <a name="addPath"></a>
                     <span class="name">
                         <b>
+                            <span class="modifier">Public</span>
                             addPath
                         </b>
                         <a href="#addPath"><span class="icon ion-ios-link"></span></a>
@@ -163,21 +179,24 @@
             </tr>
             <tr>
                 <td class="col-md-4">
-<code>addPath(paths: <a href="../classes/Path.html">Path[]</a>)</code>
+                    <span class="modifier-icon icon ion-ios-reset"></span>
+                    <code>addPath(paths: <a href="../classes/Path.html">Path[]</a>)</code>
                 </td>
             </tr>
 
 
             <tr>
                 <td class="col-md-4">
-                    <div class="io-line">Defined in <a href="" data-line="15"
-                            class="link-to-prism">src/app/services/map-data.service.ts:15</a></div>
+                    <div class="io-line">Defined in <a href="" data-line="22"
+                            class="link-to-prism">src/app/services/map/map-data.service.ts:22</a></div>
                 </td>
             </tr>
 
 
             <tr>
                 <td class="col-md-4">
+                    <div class="io-description"><p>Ajoute un ou plusieurs chemin à dessiner</p>
+</div>
 
                     <div class="io-description">
                         <b>Parameters :</b>
@@ -187,6 +206,7 @@
                                     <td>Name</td>
                                     <td>Type</td>
                                     <td>Optional</td>
+                                    <td>Description</td>
                                 </tr>
                             </thead>
                             <tbody>
@@ -201,6 +221,12 @@
                                     </td>
 
 
+                                    <td>
+                                        <ul>
+<li>chemin(s) a ajouter</li>
+</ul>
+
+                                    </td>
                                 </tr>
                             </tbody>
                         </table>
@@ -225,6 +251,7 @@
                     <a name="addPointersLocations"></a>
                     <span class="name">
                         <b>
+                            <span class="modifier">Private</span>
                             addPointersLocations
                         </b>
                         <a href="#addPointersLocations"><span class="icon ion-ios-link"></span></a>
@@ -233,15 +260,16 @@
             </tr>
             <tr>
                 <td class="col-md-4">
-<code>addPointersLocations(positions: <a href="../classes/Place.html">Place[]</a>)</code>
+                    <span class="modifier-icon icon ion-ios-reset"></span>
+                    <code>addPointersLocations(positions: <a href="../classes/Place.html">Place[]</a>)</code>
                 </td>
             </tr>
 
 
             <tr>
                 <td class="col-md-4">
-                    <div class="io-line">Defined in <a href="" data-line="33"
-                            class="link-to-prism">src/app/services/map-data.service.ts:33</a></div>
+                    <div class="io-line">Defined in <a href="" data-line="37"
+                            class="link-to-prism">src/app/services/map/map-data.service.ts:37</a></div>
                 </td>
             </tr>
 
@@ -312,8 +340,8 @@
 
             <tr>
                 <td class="col-md-4">
-                    <div class="io-line">Defined in <a href="" data-line="47"
-                            class="link-to-prism">src/app/services/map-data.service.ts:47</a></div>
+                    <div class="io-line">Defined in <a href="" data-line="67"
+                            class="link-to-prism">src/app/services/map/map-data.service.ts:67</a></div>
                 </td>
             </tr>
 
@@ -353,14 +381,16 @@
 
             <tr>
                 <td class="col-md-4">
-                    <div class="io-line">Defined in <a href="" data-line="43"
-                            class="link-to-prism">src/app/services/map-data.service.ts:43</a></div>
+                    <div class="io-line">Defined in <a href="" data-line="63"
+                            class="link-to-prism">src/app/services/map/map-data.service.ts:63</a></div>
                 </td>
             </tr>
 
 
             <tr>
                 <td class="col-md-4">
+                    <div class="io-description"><p>Permet d&#39;écouter n&#39;importe quel changement dans les données liées a la carte</p>
+</div>
 
                     <div class="io-description">
                         <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >any</a></code>
@@ -394,14 +424,16 @@
 
             <tr>
                 <td class="col-md-4">
-                    <div class="io-line">Defined in <a href="" data-line="51"
-                            class="link-to-prism">src/app/services/map-data.service.ts:51</a></div>
+                    <div class="io-line">Defined in <a href="" data-line="74"
+                            class="link-to-prism">src/app/services/map/map-data.service.ts:74</a></div>
                 </td>
             </tr>
 
 
             <tr>
                 <td class="col-md-4">
+                    <div class="io-description"><p>Permet d&#39;écouter une sélection d&#39;une ville depuis la carte</p>
+</div>
 
                     <div class="io-description">
                         <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >any</a></code>
@@ -435,14 +467,16 @@
 
             <tr>
                 <td class="col-md-4">
-                    <div class="io-line">Defined in <a href="" data-line="55"
-                            class="link-to-prism">src/app/services/map-data.service.ts:55</a></div>
+                    <div class="io-line">Defined in <a href="" data-line="82"
+                            class="link-to-prism">src/app/services/map/map-data.service.ts:82</a></div>
                 </td>
             </tr>
 
 
             <tr>
                 <td class="col-md-4">
+                    <div class="io-description"><p>Ajouter une nouvelle ville en sélection</p>
+</div>
 
                     <div class="io-description">
                         <b>Parameters :</b>
@@ -452,6 +486,7 @@
                                     <td>Name</td>
                                     <td>Type</td>
                                     <td>Optional</td>
+                                    <td>Description</td>
                                 </tr>
                             </thead>
                             <tbody>
@@ -466,6 +501,10 @@
                                     </td>
 
 
+                                    <td>
+                                        <p>à selectionner</p>
+
+                                    </td>
                                 </tr>
                             </tbody>
                         </table>
@@ -487,9 +526,53 @@
         <tbody>
             <tr>
                 <td class="col-md-4">
+                    <a name="resetAll"></a>
+                    <span class="name">
+                        <b>
+                            <span class="modifier">Public</span>
+                            resetAll
+                        </b>
+                        <a href="#resetAll"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+                    <span class="modifier-icon icon ion-ios-reset"></span>
+                    <code>resetAll()</code>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-line">Defined in <a href="" data-line="45"
+                            class="link-to-prism">src/app/services/map/map-data.service.ts:45</a></div>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-description"><p>Supprime toutes les données de la précédente recherche.</p>
+</div>
+
+                    <div class="io-description">
+                        <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
+
+                    </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
                     <a name="resetPaths"></a>
                     <span class="name">
                         <b>
+                            <span class="modifier">Private</span>
                             resetPaths
                         </b>
                         <a href="#resetPaths"><span class="icon ion-ios-link"></span></a>
@@ -498,15 +581,16 @@
             </tr>
             <tr>
                 <td class="col-md-4">
-<code>resetPaths()</code>
+                    <span class="modifier-icon icon ion-ios-reset"></span>
+                    <code>resetPaths()</code>
                 </td>
             </tr>
 
 
             <tr>
                 <td class="col-md-4">
-                    <div class="io-line">Defined in <a href="" data-line="28"
-                            class="link-to-prism">src/app/services/map-data.service.ts:28</a></div>
+                    <div class="io-line">Defined in <a href="" data-line="50"
+                            class="link-to-prism">src/app/services/map/map-data.service.ts:50</a></div>
                 </td>
             </tr>
 
@@ -529,6 +613,7 @@
                     <a name="resetPointersLocations"></a>
                     <span class="name">
                         <b>
+                            <span class="modifier">Private</span>
                             resetPointersLocations
                         </b>
                         <a href="#resetPointersLocations"><span class="icon ion-ios-link"></span></a>
@@ -537,15 +622,16 @@
             </tr>
             <tr>
                 <td class="col-md-4">
-<code>resetPointersLocations()</code>
+                    <span class="modifier-icon icon ion-ios-reset"></span>
+                    <code>resetPointersLocations()</code>
                 </td>
             </tr>
 
 
             <tr>
                 <td class="col-md-4">
-                    <div class="io-line">Defined in <a href="" data-line="38"
-                            class="link-to-prism">src/app/services/map-data.service.ts:38</a></div>
+                    <div class="io-line">Defined in <a href="" data-line="55"
+                            class="link-to-prism">src/app/services/map/map-data.service.ts:55</a></div>
                 </td>
             </tr>
 
@@ -593,7 +679,7 @@
                     </tr>
                         <tr>
                             <td class="col-md-4">
-                                    <div class="io-line">Defined in <a href="" data-line="12" class="link-to-prism">src/app/services/map-data.service.ts:12</a></div>
+                                    <div class="io-line">Defined in <a href="" data-line="15" class="link-to-prism">src/app/services/map/map-data.service.ts:15</a></div>
                             </td>
                         </tr>
 
@@ -626,7 +712,7 @@
                     </tr>
                         <tr>
                             <td class="col-md-4">
-                                    <div class="io-line">Defined in <a href="" data-line="13" class="link-to-prism">src/app/services/map-data.service.ts:13</a></div>
+                                    <div class="io-line">Defined in <a href="" data-line="16" class="link-to-prism">src/app/services/map/map-data.service.ts:16</a></div>
                             </td>
                         </tr>
 
@@ -659,7 +745,7 @@
                     </tr>
                         <tr>
                             <td class="col-md-4">
-                                    <div class="io-line">Defined in <a href="" data-line="10" class="link-to-prism">src/app/services/map-data.service.ts:10</a></div>
+                                    <div class="io-line">Defined in <a href="" data-line="13" class="link-to-prism">src/app/services/map/map-data.service.ts:13</a></div>
                             </td>
                         </tr>
 
@@ -692,7 +778,7 @@
                     </tr>
                         <tr>
                             <td class="col-md-4">
-                                    <div class="io-line">Defined in <a href="" data-line="11" class="link-to-prism">src/app/services/map-data.service.ts:11</a></div>
+                                    <div class="io-line">Defined in <a href="" data-line="14" class="link-to-prism">src/app/services/map/map-data.service.ts:14</a></div>
                             </td>
                         </tr>
 
@@ -710,6 +796,9 @@ import { Path } from &#x27;model/path&#x27;;
 import { Place } from &#x27;model/place&#x27;;
 import { Subject } from &#x27;rxjs&#x27;;
 
+/**
+ * Service qui permet la liaison entre la map et les panels
+ */
 @Injectable({
   providedIn: &#x27;root&#x27;
 })
@@ -719,34 +808,51 @@ export class MapDataService {
   private change: Subject&lt;any&gt; &#x3D; new Subject();
   private cityPushed: Subject&lt;any&gt; &#x3D; new Subject();
 
-  addPath(...paths: Path[]) {
+  /**
+   * Ajoute un ou plusieurs chemin à dessiner
+   * @param paths - chemin(s) a ajouter
+   */
+  public addPath(...paths: Path[]) {
     this.paths.push(...paths);
     if (paths.length &#x3D;&#x3D;&#x3D; 1) {
-      this.addPointersLocations(paths[0].start, paths[0].end);
+      this.addPointersLocations(paths[0].startPlace, paths[0].endPlace);
     } else {
-      this.addPointersLocations(...paths.map(p &#x3D;&gt; p.start));
-      if (paths[0].start.id !&#x3D;&#x3D; paths[paths.length - 1].end.id) {
-        this.addPointersLocations(paths[paths.length - 1].end);
+      this.addPointersLocations(...paths.map(p &#x3D;&gt; p.startPlace));
+      if (paths[0].startPlace.id !&#x3D;&#x3D; paths[paths.length - 1].endPlace.id) {
+        this.addPointersLocations(paths[paths.length - 1].endPlace);
       }
     }
     this.notify();
   }
 
-  resetPaths() {
-    this.paths &#x3D; [];
-    this.notify();
-  }
 
-  addPointersLocations(...positions: Place[]) {
+
+  private addPointersLocations(...positions: Place[]) {
     this.pointersLocation.push(...positions);
     this.notify();
   }
 
-  resetPointersLocations() {
+  /**
+   * Supprime toutes les données de la précédente recherche.
+   */
+  public resetAll() {
+    this.resetPaths();
+    this.resetPointersLocations();
+  }
+
+  private resetPaths() {
+    this.paths &#x3D; [];
+    this.notify();
+  }
+
+  private resetPointersLocations() {
     this.pointersLocation &#x3D; [];
     this.notify();
   }
 
+  /**
+   * Permet d&#x27;écouter n&#x27;importe quel changement dans les données liées a la carte
+   */
   public onChange() {
     return this.change.asObservable();
   }
@@ -755,10 +861,17 @@ export class MapDataService {
     this.change.next();
   }
 
+  /**
+   * Permet d&#x27;écouter une sélection d&#x27;une ville depuis la carte
+   */
   public onCityPushed() {
     return this.cityPushed.asObservable();
   }
 
+  /**
+   * Ajouter une nouvelle ville en sélection
+   * @param city à selectionner
+   */
   public pushCity(city: Place) {
     this.cityPushed.next(city);
   }

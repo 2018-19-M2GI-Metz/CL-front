@@ -3,9 +3,13 @@ import { Injectable } from '@angular/core';
 import { Path } from 'model/path';
 import { Place } from 'model/place';
 import { Observable, throwError, zip } from 'rxjs';
-import { catchError, take, tap } from 'rxjs/operators';
-import { LogService } from './log.service';
+import { catchError, take } from 'rxjs/operators';
+import { LogService } from '../logger/log.service';
 
+/**
+ * Service qui permet de réalise les appeles au serveur REST.
+ * @see https://github.com/2018-19-M2GI-Metz/CL-server
+ */
 @Injectable({
   providedIn: 'root'
 })
@@ -14,7 +18,7 @@ export class HttpService {
   constructor(private http: HttpClient, private logService: LogService) { }
 
   public getNearestPosition(positionUser: Place): Promise<Place> {
-    return new Promise((res, rej) => {
+    return new Promise(res => {
       const params = new HttpParams().set('lat', positionUser.posX.toString()).set('lon', positionUser.posY.toString());
       this.http.get('/nearestpoint', { params: params }).subscribe((position: Place) => {
         res(position);
@@ -26,7 +30,7 @@ export class HttpService {
   }
 
   public getAllPositions(): Promise<Place[]> {
-    return new Promise((res, rej) => {
+    return new Promise(res => {
       this.http.get('/positions').subscribe((positions: Place[]) => {
         res(positions);
       }, err => {
@@ -71,14 +75,16 @@ export class HttpService {
   }
 
   private createRequestGPS(positions: Place[]): Observable<Path[]>[] {
-    return positions.map((_, i) => {
-      if (i < positions.length - 1) {
-        const params: HttpParams = new HttpParams()
-          .set('startId', positions[i].id.toString())
-          .set('endId', positions[i + 1].id.toString());
-        return this.http.get<Path[]>('/path', { params: params });
-      }
-    }).filter(o => o);
+    return this.createTuple(positions)
+      .map(pos => this.http.get<Path[]>('/path', { params: new HttpParams().set('startId', pos.id1).set('endId', pos.id2) }));
+  }
+
+  private createTuple(positions: Place[]): { id1: string, id2: string }[] {
+    const tuple: { id1: string, id2: string }[] = [];
+    for (let index = 0; index < positions.length - 1; index++) {
+      tuple.push({ id1: positions[index].id.toString(), id2: positions[index + 1].id.toString() });
+    }
+    return tuple;
   }
 
   private createRequestTSP(positions: Place[]): Observable<Path[]> {

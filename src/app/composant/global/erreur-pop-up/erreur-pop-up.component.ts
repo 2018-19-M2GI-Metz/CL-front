@@ -1,6 +1,9 @@
 import { Component, Inject } from '@angular/core';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 
+/**
+ * Composant qui permet d'afficher un popup avec un message d'erreur
+ */
 @Component({
   selector: 'cl-erreur-pop-up',
   templateUrl: './erreur-pop-up.component.html',

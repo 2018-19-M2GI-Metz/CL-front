@@ -1,14 +1,17 @@
 import { Component, OnInit, ViewChild, ElementRef, HostListener, Renderer2 } from '@angular/core';
 import * as mappaMundi from 'mappa-mundi';
 import { Place } from 'model/place';
-import { UserLocationService } from 'services/user-location.service';
-import { DrawerService } from 'services/drawer.service';
-import { MapDataService } from 'services/map-data.service';
+import { UserLocationService } from 'services/user-location/user-location.service';
+import { DrawerService } from 'services/drawer/drawer.service';
+import { MapDataService } from 'services/map/map-data.service';
 import { Subscription } from 'rxjs';
-import { HttpService } from 'services/http-service.service';
+import { HttpService } from 'services/http/http-service.service';
 
 const KEY = 'pk.eyJ1IjoiZGFuaWVscGF5ZXQiLCJhIjoiY2pvem1leGF0Mm1hOTN3cGhmbHM0b3p2ayJ9.s0Gdr8eabQi56tHONKv1Sg';
 
+/**
+ * Composant qui gère la carte
+ */
 @Component({
   selector: 'cl-map',
   templateUrl: './map.component.html',
@@ -46,12 +49,19 @@ export class MapComponent implements OnInit {
 
   async ngOnInit() {
     this.canvasTmp = this.canvas;
-    await this.initMap();
-    this.drawMap();
+    this.userLocationService.getUserLocation().subscribe(async (position: Place) => {
+      this.userPosition = position;
+      this.positionMapState = position;
+      await this.initMap();
+      this.drawMap();
+    });
   }
 
+  /**
+   * S'execute lorsque l'utilisateur modifie la taille de la fenetre
+   */
   @HostListener('window:resize')
-  onResize() {
+  public onResize() {
     if (this.map) {
       this.zoomState = this.map.zoom();
       const position = this.map.fromPointToLatLng(Math.floor(window.innerWidth / 2), Math.floor(window.innerHeight / 2));
@@ -70,7 +80,7 @@ export class MapComponent implements OnInit {
     this.ngOnInit();
   }
 
-  initMouseEvent() {
+  private initMouseEvent() {
     this.renderer.listen(this.container.nativeElement, 'mousedown', () => {
       this.mapMouseClickState = "mouseDown";
     });
@@ -120,6 +130,9 @@ export class MapComponent implements OnInit {
     }
   }
 
+  /**
+   * Notifie les panels que l'on choisis la ville qui se trouve dans le popup
+   */
   public setLocalisation() {
     this.mapData.pushCity(this.popupCity);
   }
@@ -129,21 +142,15 @@ export class MapComponent implements OnInit {
       this.drawerService.setContext(this.canvas.nativeElement.getContext("2d"));
       this.canvas.nativeElement.width = window.innerWidth;
       this.canvas.nativeElement.height = window.innerHeight;
-      this.userPosition = await this.userLocationService.getUserLocation();
-      const realPosition = this.getPosition(this.userPosition);
       const options = {
-        lat: realPosition ? realPosition.posX : 46.483440,
-        lng: realPosition ? realPosition.posY : 2.525914,
+        lat: this.positionMapState.posX,
+        lng: this.positionMapState.posY,
         zoom: this.getZoomState(this.userPosition)
       };
       this.map = this.mappa.tileMap(options);
       this.map.overlay(this.canvas.nativeElement);
       res();
     });
-  }
-
-  private getPosition(userPosition): Place {
-    return this.positionMapState || userPosition;
   }
 
   private getZoomState(userPosition): number {

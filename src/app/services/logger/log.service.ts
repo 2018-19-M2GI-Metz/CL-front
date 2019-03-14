@@ -1,7 +1,10 @@
 import { Injectable } from "@angular/core";
 import { MatDialog } from "@angular/material/dialog";
-import { ErreurPopUpComponent } from "../composant/global/erreur-pop-up/erreur-pop-up.component";
+import { ErreurPopUpComponent } from "../../composant/global/erreur-pop-up/erreur-pop-up.component";
 
+/**
+ * Service qui s'occupe de logger les informations
+ */
 @Injectable({
     providedIn: 'root'
 })
@@ -14,6 +17,9 @@ export class LogService {
     }
 }
 
+/**
+ * Classe représentant un logger
+ */
 class Log {
     private message: string;
     private info: any;
@@ -53,17 +59,7 @@ class Log {
     }
 
     public log() {
-        switch (this.flags) {
-            case "error":
-                console.error(this.message, this.info);
-                break;
-            case "warn":
-                console.warn(this.message, this.info);
-                break;
-            case "info":
-                console.info(this.message, this.info);
-                break;
-        }
+        console[this.flags](this.message, this.info);
         return this;
     }
 }

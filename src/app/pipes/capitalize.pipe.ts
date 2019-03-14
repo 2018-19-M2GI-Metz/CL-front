@@ -1,5 +1,8 @@
 import { Pipe, PipeTransform } from '@angular/core';
 
+/**
+ * Pipe qui permet de mettre la premier lettre en majuscule
+ */
 @Pipe({
   name: 'capitalize'
 })

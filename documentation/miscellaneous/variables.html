@@ -66,7 +66,7 @@
                             <a href="#cities" title="src/app/mock-backend/api/mock-data.ts"><b>cities</b>&nbsp;&nbsp;&nbsp;(src/.../mock-data.ts)</a>
                         </li>
                         <li>
-                            <a href="#COLORS" title="src/app/services/drawer.service.ts"><b>COLORS</b>&nbsp;&nbsp;&nbsp;(src/.../drawer.service.ts)</a>
+                            <a href="#COLORS" title="src/app/services/drawer/drawer.service.ts"><b>COLORS</b>&nbsp;&nbsp;&nbsp;(src/.../drawer.service.ts)</a>
                         </li>
                         <li>
                             <a href="#environment" title="src/environments/environment.mock.ts"><b>environment</b>&nbsp;&nbsp;&nbsp;(src/.../environment.mock.ts)</a>
@@ -151,15 +151,15 @@
     {
         url: &quot;/positions&quot;,
         method: &quot;GET&quot;,
-        objectToReturn: (req) &#x3D;&gt; [PARIS, METZ, CHARLEVILLE]
+        objectToReturn: () &#x3D;&gt; [PARIS, METZ, CHARLEVILLE]
     },
     {
         url: &quot;/path&quot;,
         method: &quot;GET&quot;,
         objectToReturn: (req) &#x3D;&gt; {
-            const idStart: number &#x3D; +req.params.get(&#x27;idStart&#x27;);
-            const idEnd: number &#x3D; +req.params.get(&#x27;idEnd&#x27;);
-            return paths.find(path &#x3D;&gt; path.start.id &#x3D;&#x3D;&#x3D; idStart &amp;&amp; path.end.id &#x3D;&#x3D;&#x3D; idEnd);
+            const idStart: number &#x3D; +req.params.get(&#x27;startId&#x27;);
+            const idEnd: number &#x3D; +req.params.get(&#x27;endId&#x27;);
+            return paths.find(path &#x3D;&gt; path.startPlace.id &#x3D;&#x3D;&#x3D; idStart &amp;&amp; path.endPlace.id &#x3D;&#x3D;&#x3D; idEnd);
         }
     },
     {
@@ -172,7 +172,7 @@
                 pathsBuild.push({ start: +params[i], end: +params[i + 1] });
             }
             pathsBuild.push({ start: +params[params.length - 1], end: +params[0] });
-            return pathsBuild.map((pathsId) &#x3D;&gt; paths.find(path &#x3D;&gt; path.start.id &#x3D;&#x3D;&#x3D; pathsId.start &amp;&amp; path.end.id &#x3D;&#x3D;&#x3D; pathsId.end));
+            return pathsBuild.map((pathsId) &#x3D;&gt; paths.find(path &#x3D;&gt; path.startPlace.id &#x3D;&#x3D;&#x3D; pathsId.start &amp;&amp; path.endPlace.id &#x3D;&#x3D;&#x3D; pathsId.end));
         }
     },
     {
@@ -210,7 +210,7 @@
                     </tr>
                     <tr>
                         <td class="col-md-4">
-                            <i>Default value : </i><code>{ name: &quot;charleville&quot;, id: 3, lon: 49.762460, lat: 4.722300 }</code>
+                            <i>Default value : </i><code>{ name: &quot;charleville&quot;, id: 3, posX: 4.722300, posY: 49.762460 }</code>
                         </td>
                     </tr>
 
@@ -264,7 +264,7 @@
                     </tr>
                     <tr>
                         <td class="col-md-4">
-                            <i>Default value : </i><code>{ name: &quot;metz&quot;, id: 2, lon: 49.119457, lat: 6.175982 }</code>
+                            <i>Default value : </i><code>{ name: &quot;metz&quot;, id: 2, posX: 6.175982, posY: 49.119457 }</code>
                         </td>
                     </tr>
 
@@ -291,7 +291,7 @@
                     </tr>
                     <tr>
                         <td class="col-md-4">
-                            <i>Default value : </i><code>{ name: &quot;paris&quot;, id: 1, lon: 48.856783, lat: 2.348773 }</code>
+                            <i>Default value : </i><code>{ name: &quot;paris&quot;, id: 1, posX: 2.348773, posY: 48.856783 }</code>
                         </td>
                     </tr>
 
@@ -324,7 +324,7 @@
                     </tr>
                     <tr>
                         <td class="col-md-4">
-                            <i>Default value : </i><code>{ start: PARIS, end: METZ }</code>
+                            <i>Default value : </i><code>{ startPlace: PARIS, endPlace: METZ }</code>
                         </td>
                     </tr>
 
@@ -357,7 +357,7 @@
                     </tr>
                     <tr>
                         <td class="col-md-4">
-                            <i>Default value : </i><code>{ start: METZ, end: CHARLEVILLE }</code>
+                            <i>Default value : </i><code>{ startPlace: METZ, endPlace: CHARLEVILLE }</code>
                         </td>
                     </tr>
 
@@ -384,7 +384,7 @@
                     </tr>
                     <tr>
                         <td class="col-md-4">
-                            <i>Default value : </i><code>{ start: CHARLEVILLE, end: PARIS }</code>
+                            <i>Default value : </i><code>{ startPlace: CHARLEVILLE, endPlace: PARIS }</code>
                         </td>
                     </tr>
 
@@ -411,7 +411,7 @@
                     </tr>
                     <tr>
                         <td class="col-md-4">
-                            <i>Default value : </i><code>{ start: CHARLEVILLE, end: METZ }</code>
+                            <i>Default value : </i><code>{ startPlace: CHARLEVILLE, endPlace: METZ }</code>
                         </td>
                     </tr>
 
@@ -438,7 +438,7 @@
                     </tr>
                     <tr>
                         <td class="col-md-4">
-                            <i>Default value : </i><code>{ start: METZ, end: PARIS }</code>
+                            <i>Default value : </i><code>{ startPlace: METZ, endPlace: PARIS }</code>
                         </td>
                     </tr>
 
@@ -465,7 +465,7 @@
                     </tr>
                     <tr>
                         <td class="col-md-4">
-                            <i>Default value : </i><code>{ start: PARIS, end: CHARLEVILLE }</code>
+                            <i>Default value : </i><code>{ startPlace: PARIS, endPlace: CHARLEVILLE }</code>
                         </td>
                     </tr>
 
@@ -506,7 +506,7 @@
             </tbody>
         </table>
 </section>
-    <h3>src/app/services/drawer.service.ts</h3>
+    <h3>src/app/services/drawer/drawer.service.ts</h3>
     <section>
     <h3></h3>        <table class="table table-sm table-bordered">
             <tbody>
@@ -537,6 +537,12 @@
                         </td>
                     </tr>
 
+                <tr>
+                    <td class="col-md-4">
+                        <div class="io-description"><p>Couleurs disponibles pour les dessins</p>
+</div>
+                    </td>
+                </tr>
 
             </tbody>
         </table>
@@ -633,8 +639,8 @@
                         <td class="col-md-4">
                             <i>Default value : </i><code>{
   production: false,
-  isServeurMock: true,
-  urlServeur: &quot;127.0.0.1&quot;
+  isServeurMock: false,
+  urlServeur: &quot;localhost:8081/api&quot;
 }</code>
                         </td>
                     </tr>
