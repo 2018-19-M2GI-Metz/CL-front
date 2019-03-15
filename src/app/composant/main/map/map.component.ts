@@ -176,8 +176,8 @@ export class MapComponent implements OnInit {
   private drawPaths() {
     if (this.mapData.paths) {
       this.mapData.paths.forEach(path => {
-        const startPixels = this.map.latLngToPixel(path.startPlace.posY, path.startPlace.posX);
-        const endPixels = this.map.latLngToPixel(path.endPlace.posY, path.endPlace.posX);
+        const startPixels = this.map.latLngToPixel(path.startPlace.posX, path.startPlace.posY);
+        const endPixels = this.map.latLngToPixel(path.endPlace.posX, path.endPlace.posY);
         this.drawerService.path(startPixels, endPixels);
       });
     }
@@ -197,7 +197,7 @@ export class MapComponent implements OnInit {
   private drawLocation() {
     if (this.mapData.pointersLocation) {
       this.mapData.pointersLocation.forEach(position => {
-        const positionPixels = this.map.latLngToPixel(position.posY, position.posX);
+        const positionPixels = this.map.latLngToPixel(position.posX, position.posY);
         this.drawerService.pointer(positionPixels);
       });
     }
@@ -205,7 +205,7 @@ export class MapComponent implements OnInit {
 
   private drawPositions() {
     this.positions.forEach(position => {
-      const positionPixels = this.map.latLngToPixel(position.posY, position.posX);
+      const positionPixels = this.map.latLngToPixel(position.posX, position.posY);
       this.drawerService.location(positionPixels);
     });
   }
